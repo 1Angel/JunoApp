@@ -1,0 +1,6 @@
+@JunoBE_HostAddress = http://localhost:5036
+
+GET {{JunoBE_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
