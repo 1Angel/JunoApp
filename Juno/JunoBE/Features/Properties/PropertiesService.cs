@@ -61,8 +61,6 @@ namespace JunoBE.Features.Properties
             //pagination
             query = query.Skip((paginationRequest.pageNumber - 1) * paginationRequest.pageSize).Take(paginationRequest.pageSize);
 
-
-
             var properties = await query
             .Include(x => x.address)
             .Select(x => _propertiesMapper.ToDto(x))

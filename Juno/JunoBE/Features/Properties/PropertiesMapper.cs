@@ -30,7 +30,8 @@ namespace JunoBE.Features.Properties
                 homeStatus = createPropertyDto.homeStatus,
                 homeType = createPropertyDto.homeType,
                 latitude = createPropertyDto.latitude,
-                longitude = createPropertyDto.longitude
+                longitude = createPropertyDto.longitude,
+                square_meters = createPropertyDto.square_meters
 
             };
         }

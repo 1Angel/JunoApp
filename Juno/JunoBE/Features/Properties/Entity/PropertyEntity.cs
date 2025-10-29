@@ -17,7 +17,7 @@ namespace JunoBE.Features.Properties
         public AddressEntity? address { get; set; }
         //add home status table -For sale or for rent, recently-sold
         public string homeStatus { get; set; }
-        public DateTime createdAt { get; set; } = DateTime.Now;
+        public DateTime createdAt { get; set; } = DateTime.UtcNow;
         //add home type table -normal house, family house, for one person, etc.
         public string homeType { get; set; }
         public int square_meters { get; set; }

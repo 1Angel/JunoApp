@@ -17,5 +17,6 @@ namespace JunoBE.Features.Properties.Dtos
         //geolocation
         public double latitude { get; set; }
         public double longitude { get; set; }
+        public int square_meters { get; set; }
     }
 }

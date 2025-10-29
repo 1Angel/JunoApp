@@ -1,27 +1,44 @@
-import { Marker, Popup } from "react-leaflet"
-import L from "leaflet";
+"use client"
 
-interface Props{
-    lat: number;
-    long: number;
-    popUpTitle: string | number
+import { Marker, Popup } from "react-leaflet"
+import L, { LatLngExpression, LeafletEventHandlerFnMap } from "leaflet";
+import { Marker as LeafletMarker } from 'leaflet';
+import { Ref } from "react";
+import { Properties } from "@/types";
+import HouseCard from "./Card";
+
+interface Props {
+    position: LatLngExpression
+    popUpTitle: string | number;
+    draggable?: boolean;
+    marketEvent?: LeafletEventHandlerFnMap | undefined;
+    marketRef?: Ref<LeafletMarker<any>> | undefined;
+    data?: Properties
 }
 
+export default function MapMarker({ popUpTitle, marketEvent, draggable, marketRef, position, data }: Props) {
 
-export default function MapMarker({lat, long, popUpTitle}: Props){
+    const markIcon = new L.Icon({
+        iconUrl: 'marker-icon.png',
+        shadowUrl: "/marker-shadow.png",
+        iconSize: [22, 32],
+        shadowSize: [32, 32],
+        iconAnchor: [11, 32],
+        shadowAnchor: [11, 32],
+        popupAnchor: [0, -28]
+    });
 
-        const markIcon = new L.Icon({
-            iconUrl: 'marker-icon.png',
-            shadowUrl: "/marker-shadow.png",
-            iconSize: [22, 32],
-            shadowSize: [41, 41],
-            iconAnchor: [22, 64],
-            shadowAnchor: [24, 72],
-            popupAnchor: [-11, -62]
-        })
     return (
-        <Marker position={[lat, long]} icon={markIcon}>
-            <Popup>{popUpTitle}</Popup>
+        <Marker
+            position={position}
+            icon={markIcon}
+            eventHandlers={marketEvent}
+            draggable={draggable}
+            ref={marketRef}
+        >
+            <Popup>
+                <HouseCard data={data}/>
+            </Popup>
         </Marker>
     )
 }
