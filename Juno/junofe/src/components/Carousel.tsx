@@ -1,13 +1,18 @@
 "use client"
 
+import { Images } from "@/types";
 import { useState } from "react";
 
-const images = [
-    "https://tse2.mm.bing.net/th/id/OIP.RpTC3DLyO3T1SehYUjkleQHaF_?w=1300&h=1053&rs=1&pid=ImgDetMain&o=7&rm=3",
-    "https://tse1.explicit.bing.net/th/id/OIP.dXlAF8AlsisNUGWuiD0pWgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
-];
+// const images = [
+//     "https://tse2.mm.bing.net/th/id/OIP.RpTC3DLyO3T1SehYUjkleQHaF_?w=1300&h=1053&rs=1&pid=ImgDetMain&o=7&rm=3",
+//     "https://tse1.explicit.bing.net/th/id/OIP.dXlAF8AlsisNUGWuiD0pWgHaFj?rs=1&pid=ImgDetMain&o=7&rm=3"
+// ];
 
-export default function Carousel() {
+interface Props{
+  images: Images[]
+}
+
+export default function Carousel({images}: Props) {
   const [index, setIndex] = useState(0);
   var total = images.length;
 
@@ -28,7 +33,7 @@ export default function Carousel() {
         {images.map((src, i) => (
           <img
             key={i}
-            src={src}
+            src={src.imageUrl}
             alt={`Slide ${i}`}
             className="w-full flex-shrink-0 object-cover"
           />

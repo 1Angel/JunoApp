@@ -1,6 +1,6 @@
 
 using JunoBE.Features.Address;
-using JunoBE.Features.Properties.Entity;
+using JunoBE.Features.ProperyImage.Entity;
 
 namespace JunoBE.Features.Properties
 {
@@ -21,5 +21,9 @@ namespace JunoBE.Features.Properties
         //add home type table -normal house, family house, for one person, etc.
         public string homeType { get; set; }
         public int square_meters { get; set; }
+
+        //propertyImage relationship
+        public List<PropertiesImageEntity> propertiesImage { get; set; }
+
     }
 }

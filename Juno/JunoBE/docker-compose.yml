@@ -10,10 +10,19 @@ services:
     environment:
       - POSGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=
+      - POSTGRES_DB=junodb
+
+  azurito:
+    image: mcr.microsoft.com/azure-storage/azurite
+    container_name: azuriteJuno
+    hostname: azurite
+    restart: always
+    ports:
+      - "10000:10000"
       
   adminer:
     image: adminer
+    container_name: adminerJuno
     restart: always
     ports:
       - 8080:8080

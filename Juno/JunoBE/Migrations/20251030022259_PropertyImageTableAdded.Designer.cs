@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JunoBE.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251027222931_initialpostgres")]
-    partial class initialpostgres
+    [Migration("20251030022259_PropertyImageTableAdded")]
+    partial class PropertyImageTableAdded
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,28 @@ namespace JunoBE.Migrations
                         .IsUnique();
 
                     b.ToTable("addresses");
+                });
+
+            modelBuilder.Entity("JunoBE.Features.Properties.Entity.PropertiesImageEntity", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+
+                    b.Property<int>("PropertyEntityId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("imageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("PropertyEntityId");
+
+                    b.ToTable("propertiesImages");
                 });
 
             modelBuilder.Entity("JunoBE.Features.Properties.PropertyEntity", b =>
@@ -113,9 +135,22 @@ namespace JunoBE.Migrations
                     b.Navigation("property");
                 });
 
+            modelBuilder.Entity("JunoBE.Features.Properties.Entity.PropertiesImageEntity", b =>
+                {
+                    b.HasOne("JunoBE.Features.Properties.PropertyEntity", "property")
+                        .WithMany("propertiesImage")
+                        .HasForeignKey("PropertyEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("property");
+                });
+
             modelBuilder.Entity("JunoBE.Features.Properties.PropertyEntity", b =>
                 {
                     b.Navigation("address");
+
+                    b.Navigation("propertiesImage");
                 });
 #pragma warning restore 612, 618
         }

@@ -28,7 +28,7 @@ namespace JunoBE.Features.Properties
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] CreatePropertyDto createPropertyDto)
+        public async Task<ActionResult> Create([FromForm] CreatePropertyDto createPropertyDto)
         {
             await _service.Create(createPropertyDto);
             return Ok();

@@ -1,6 +1,9 @@
+using Azure.Storage.Blobs;
+using JunoBE.Common.Services;
 using JunoBE.Data;
 using JunoBE.Features.Address;
 using JunoBE.Features.Properties;
+using JunoBE.Features.ProperyImage;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,14 +25,18 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-
 //services
 builder.Services.AddScoped<PropertiesService>();
+builder.Services.AddScoped<PropertyimageService>();
 
 //mappers
 builder.Services.AddSingleton<PropertiesMapper>();
 builder.Services.AddSingleton<AddressMapper>();
+builder.Services.AddSingleton<PropertyImageMapper>();
+
+//azure
+builder.Services.AddSingleton<IUploadService, UploadService>();
+builder.Services.AddSingleton(_ => new BlobServiceClient(builder.Configuration.GetConnectionString("azureConn")));
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

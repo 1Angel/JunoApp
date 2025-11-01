@@ -27,7 +27,7 @@ export default function HouseCard({ data }: Props) {
 
         <div className="border-0 overflow-hidden w-full shadow-2xl rounded-2xl">
             {/* <img className="w-full" src={'https://tse2.mm.bing.net/th/id/OIP.HyPO0GQqnsGoMcauAHz_MQHaE7?rs=1&pid=ImgDetMain&o=7&rm=3'} /> */}
-            <Carousel/>
+            <Carousel images={data.images}/>
             <div>
                 <span className="font-bold text-xl pl-4">RD$ {RDCurrency.format(data.price)}</span>
             </div>

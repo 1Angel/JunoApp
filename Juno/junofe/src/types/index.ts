@@ -17,6 +17,7 @@ export interface Properties {
     homeStatus:    string;
     homeType:      string;
     square_meters: number;
+    images:        Images[];
     createdAt:     Date;
 }
 
@@ -24,4 +25,8 @@ export interface Address {
     street:   string;
     city:     string;
     province: string;
+}
+
+export interface Images {
+    imageUrl: string;
 }

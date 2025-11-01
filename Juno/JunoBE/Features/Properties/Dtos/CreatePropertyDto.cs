@@ -18,5 +18,6 @@ namespace JunoBE.Features.Properties.Dtos
         public double latitude { get; set; }
         public double longitude { get; set; }
         public int square_meters { get; set; }
+        public List<IFormFile> image { get; set; }
     }
 }

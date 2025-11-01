@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JunoBE.Migrations
 {
     /// <inheritdoc />
-    public partial class initialpostgres : Migration
+    public partial class PropertyImageTableAdded : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,11 +56,36 @@ namespace JunoBE.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "propertiesImages",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    imageUrl = table.Column<string>(type: "text", nullable: false),
+                    PropertyEntityId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_propertiesImages", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_propertiesImages_properties_PropertyEntityId",
+                        column: x => x.PropertyEntityId,
+                        principalTable: "properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_addresses_PropertyEntityId",
                 table: "addresses",
                 column: "PropertyEntityId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_propertiesImages_PropertyEntityId",
+                table: "propertiesImages",
+                column: "PropertyEntityId");
         }
 
         /// <inheritdoc />
@@ -68,6 +93,9 @@ namespace JunoBE.Migrations
         {
             migrationBuilder.DropTable(
                 name: "addresses");
+
+            migrationBuilder.DropTable(
+                name: "propertiesImages");
 
             migrationBuilder.DropTable(
                 name: "properties");

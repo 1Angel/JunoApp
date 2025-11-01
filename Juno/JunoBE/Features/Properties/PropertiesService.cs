@@ -1,6 +1,8 @@
 using JunoBE.Common;
+using JunoBE.Common.Services;
 using JunoBE.Data;
 using JunoBE.Features.Properties.Dtos;
+using JunoBE.Features.ProperyImage;
 using Microsoft.EntityFrameworkCore;
 
 namespace JunoBE.Features.Properties
@@ -9,19 +11,23 @@ namespace JunoBE.Features.Properties
     {
         private readonly AppDbContext _context;
         private readonly PropertiesMapper _propertiesMapper;
-        public PropertiesService(AppDbContext context, PropertiesMapper propertiesMapper)
+
+        private readonly PropertyimageService propertyimageService;
+
+        public PropertiesService(AppDbContext context, PropertiesMapper propertiesMapper, PropertyimageService propertyimageService)
         {
             _context = context;
             _propertiesMapper = propertiesMapper;
-
+            this.propertyimageService = propertyimageService;
         }
-
 
         public async Task Create(CreatePropertyDto createPropertyDto)
         {
             var propertyEntity = _propertiesMapper.ToEntity(createPropertyDto);
-            await _context.properties.AddAsync(propertyEntity);
+            var result = await _context.properties.AddAsync(propertyEntity);
             await _context.SaveChangesAsync();
+
+            await propertyimageService.UploadImages(result.Entity.Id, createPropertyDto.image);
         }
 
         public async Task<PropertiesDto> GetPropertyByIdAsync(int propertyId)
@@ -39,7 +45,7 @@ namespace JunoBE.Features.Properties
 
             if (!string.IsNullOrEmpty(paginationRequest.search))
             {
-                query = query.Where(x => x.address.city == paginationRequest.search);
+                query = query.Where(x => x.address!.city == paginationRequest.search);
             }
             //-----todo tomorrow-----
             //add filter by homestatus and hometype
@@ -49,7 +55,7 @@ namespace JunoBE.Features.Properties
             //filter by price
             if (!string.IsNullOrEmpty(paginationRequest.minimumPrice.ToString()) && !string.IsNullOrEmpty(paginationRequest.maximumPrice.ToString()))
             {
-                query = query.Where(x => x.price >= paginationRequest.minimumPrice && x.price <= paginationRequest.maximumPrice); 
+                query = query.Where(x => x.price >= paginationRequest.minimumPrice && x.price <= paginationRequest.maximumPrice);
             }
 
             //add filter by number of bedrooms
@@ -63,11 +69,12 @@ namespace JunoBE.Features.Properties
 
             var properties = await query
             .Include(x => x.address)
+            .Include(x => x.propertiesImage)
             .Select(x => _propertiesMapper.ToDto(x))
             .ToListAsync();
 
             return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, properties.Count(), properties);
         }
-        
+
     }
 }

@@ -1,5 +1,6 @@
 using JunoBE.Features.Address;
 using JunoBE.Features.Properties;
+using JunoBE.Features.ProperyImage.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace JunoBE.Data
@@ -10,6 +11,7 @@ namespace JunoBE.Data
 
         public DbSet<PropertyEntity> properties { get; set; }
         public DbSet<AddressEntity> addresses { get; set; }
+        public DbSet<PropertiesImageEntity> propertiesImages { get; set; }
 
         // protected override void OnModelCreating(ModelBuilder modelBuilder)
         // {
