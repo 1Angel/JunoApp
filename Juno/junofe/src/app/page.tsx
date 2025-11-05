@@ -27,7 +27,7 @@ export default async function Page() {
   return (
     <div className="flex h-[calc(100vh-64px)] ">
       <div className="w-1/2 h-full">
-        <DynamicMap>
+        <DynamicMap zoom={8}>
           {
             posts.results.map((e) => (
               <MapMarker

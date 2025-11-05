@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function NavBar() {
 
     const isLogegedIn = false;
@@ -10,7 +12,7 @@ export default function NavBar() {
                         <div>
                             <img src="infinityLogo.png" className="size-12 cursor-pointer" alt="logo here" />
                         </div>
-                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" >Home</button>
+                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" ><Link href='/'>Home</Link></button>
                         <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" >Find a Job</button>
                         <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500">Find a Company</button>
 

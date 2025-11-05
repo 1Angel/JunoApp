@@ -1,6 +1,7 @@
 using JunoBE.Features.Address;
 using JunoBE.Features.Properties.Dtos;
 using JunoBE.Features.ProperyImage;
+using JunoBE.Features.User;
 
 namespace JunoBE.Features.Properties
 {
@@ -8,11 +9,13 @@ namespace JunoBE.Features.Properties
     {
         private readonly AddressMapper _addressMapper;
         private readonly PropertyImageMapper propertyImageMapper;
+        private readonly UserMapper userMapper;
 
-        public PropertiesMapper(AddressMapper addressMapper, PropertyImageMapper propertyImageMapper)
+        public PropertiesMapper(AddressMapper addressMapper, PropertyImageMapper propertyImageMapper, UserMapper userMapper)
         {
             _addressMapper = addressMapper;
             this.propertyImageMapper = propertyImageMapper;
+            this.userMapper = userMapper;
         }
 
 
@@ -34,6 +37,7 @@ namespace JunoBE.Features.Properties
                 homeType = createPropertyDto.homeType,
                 latitude = createPropertyDto.latitude,
                 longitude = createPropertyDto.longitude,
+                UserEntityId = "8aaa837a-1805-4c02-8f4f-cd3ba8b5e653",
                 square_meters = createPropertyDto.square_meters
             };
         }
@@ -53,6 +57,7 @@ namespace JunoBE.Features.Properties
                 homeStatus = property.homeStatus.ToString(),
                 homeType = property.homeType.ToString(),
                 square_meters = property.square_meters,
+                user = userMapper.ToDto(property.user),
                 images = propertyImageMapper.ToDto(property.propertiesImage),
                 createdAt = property.createdAt
             };

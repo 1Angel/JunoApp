@@ -1,5 +1,6 @@
 using JunoBE.Features.Address.Dtos;
 using JunoBE.Features.ProperyImage;
+using JunoBE.Features.User.Dtos;
 
 namespace JunoBE.Features.Properties.Dtos
 {
@@ -17,6 +18,7 @@ namespace JunoBE.Features.Properties.Dtos
         public string homeStatus { get; set; }
         public string homeType { get; set; }
         public int square_meters { get; set; }
+        public UserDto user { get; set; }
         public List<PropertiesImageDto> images { get; set; }
         public DateTime createdAt { get; set; }
     }

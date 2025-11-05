@@ -1,15 +1,23 @@
 "use client"
 
+import { LatLngExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import React from "react";
 import { MapContainer, TileLayer } from 'react-leaflet'
 
-export default function Map({ children }: Readonly<{ children: React.ReactNode }>) {
+interface Props{
+    position?: LatLngExpression | undefined;
+    zoom: number;
+    children: React.ReactNode
+}
+
+
+export default function Map({children, position, zoom}: Props) {
 
     return (
         <MapContainer
             center={[18.6652909, -71.449683, 409710]}
-            zoom={6}
+            zoom={zoom}
             className="h-full w-full"
         >
             <TileLayer

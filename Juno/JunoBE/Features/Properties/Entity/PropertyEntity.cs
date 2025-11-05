@@ -1,6 +1,7 @@
 
 using JunoBE.Features.Address;
 using JunoBE.Features.ProperyImage.Entity;
+using JunoBE.Features.User;
 
 namespace JunoBE.Features.Properties
 {
@@ -24,6 +25,10 @@ namespace JunoBE.Features.Properties
 
         //propertyImage relationship
         public List<PropertiesImageEntity> propertiesImage { get; set; }
+
+        //user relationship
+        public UserEntity user { get; set; }
+        public string UserEntityId { get; set; }
 
     }
 }

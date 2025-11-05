@@ -1,12 +1,63 @@
+using System.Text;
 using Azure.Storage.Blobs;
+using JunoBE.Common.Authorization;
 using JunoBE.Common.Services;
 using JunoBE.Data;
 using JunoBE.Features.Address;
+using JunoBE.Features.Cookies;
 using JunoBE.Features.Properties;
 using JunoBE.Features.ProperyImage;
+using JunoBE.Features.User;
+using JunoBE.Features.User.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//identity
+builder.Services.AddIdentity<UserEntity, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+
+//authentication - jwt
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuer = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:JwtKey"])),
+    };
+        options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = ctx =>
+        {
+            ctx.Request.Cookies.TryGetValue("accessToken", out var accessToken);
+            if (!string.IsNullOrEmpty(accessToken))
+                ctx.Token = accessToken;
+            return Task.CompletedTask;
+        }
+    };
+});
+
+//jwt settings
+builder.Services.AddScoped<TokenService>();
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(JwtSettings.SectionName));
+
+//cookies
+builder.Services.AddScoped<CookieService>();
+
+//current-user
+builder.Services.AddScoped<CurrentUser>();
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -28,11 +79,13 @@ builder.Services.AddCors(options =>
 //services
 builder.Services.AddScoped<PropertiesService>();
 builder.Services.AddScoped<PropertyimageService>();
+builder.Services.AddScoped<UserService>();
 
 //mappers
 builder.Services.AddSingleton<PropertiesMapper>();
 builder.Services.AddSingleton<AddressMapper>();
 builder.Services.AddSingleton<PropertyImageMapper>();
+builder.Services.AddSingleton<UserMapper>();
 
 //azure
 builder.Services.AddSingleton<IUploadService, UploadService>();

@@ -34,6 +34,9 @@ namespace JunoBE.Features.Properties
         {
             return await _context.properties
             .Where(x => x.Id == propertyId)
+            .Include(x=>x.address)
+            .Include(x=>x.user)
+            .Include(x=>x.propertiesImage)
             .Select(x => _propertiesMapper.ToDto(x))
             .FirstAsync();
         }
@@ -69,6 +72,7 @@ namespace JunoBE.Features.Properties
 
             var properties = await query
             .Include(x => x.address)
+            .Include(x=>x.user)
             .Include(x => x.propertiesImage)
             .Select(x => _propertiesMapper.ToDto(x))
             .ToListAsync();
