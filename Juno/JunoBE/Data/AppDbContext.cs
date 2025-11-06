@@ -1,4 +1,5 @@
 using JunoBE.Features.Address;
+using JunoBE.Features.Bookmarks;
 using JunoBE.Features.Properties;
 using JunoBE.Features.ProperyImage.Entity;
 using JunoBE.Features.User;
@@ -14,6 +15,7 @@ namespace JunoBE.Data
         public DbSet<PropertyEntity> properties { get; set; }
         public DbSet<AddressEntity> addresses { get; set; }
         public DbSet<PropertiesImageEntity> propertiesImages { get; set; }
+        public DbSet<BookmarkEntity> bookmarks { get; set; }
 
         // protected override void OnModelCreating(ModelBuilder modelBuilder)
         // {

@@ -4,6 +4,7 @@ using JunoBE.Common.Authorization;
 using JunoBE.Common.Services;
 using JunoBE.Data;
 using JunoBE.Features.Address;
+using JunoBE.Features.Bookmarks;
 using JunoBE.Features.Cookies;
 using JunoBE.Features.Properties;
 using JunoBE.Features.ProperyImage;
@@ -80,6 +81,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<PropertiesService>();
 builder.Services.AddScoped<PropertyimageService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<BookmarkService>();
 
 //mappers
 builder.Services.AddSingleton<PropertiesMapper>();

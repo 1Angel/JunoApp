@@ -1,5 +1,6 @@
 
 using JunoBE.Features.Address;
+using JunoBE.Features.Bookmarks;
 using JunoBE.Features.ProperyImage.Entity;
 using JunoBE.Features.User;
 
@@ -29,6 +30,9 @@ namespace JunoBE.Features.Properties
         //user relationship
         public UserEntity user { get; set; }
         public string UserEntityId { get; set; }
+
+        //bookmarks relationship
+        public List<BookmarkEntity> bookmark { get; set; }
 
     }
 }

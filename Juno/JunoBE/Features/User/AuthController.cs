@@ -32,7 +32,7 @@ namespace JunoBE.Features.User
         public async Task<ActionResult> Hola()
         {
             Response.Cookies.Append("hola", "este es el mensaje que estare enviando");
-            return Ok($"hola {_currentUser.getUser()}");
+            return Ok($"hola {_currentUser.getUserId()}");
         }
 
         [HttpPost("register")]

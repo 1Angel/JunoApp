@@ -16,9 +16,14 @@ namespace JunoBE.Common.Authorization
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public string? getUser()
+        public string? getUserName()
         {
             return httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+        }
+
+        public string getUserId()
+        {
+            return httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Sid);
         }
     }
 }
