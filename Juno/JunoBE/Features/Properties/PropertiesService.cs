@@ -21,9 +21,9 @@ namespace JunoBE.Features.Properties
             this.propertyimageService = propertyimageService;
         }
 
-        public async Task Create(CreatePropertyDto createPropertyDto)
+        public async Task Create(CreatePropertyDto createPropertyDto, string userId)
         {
-            var propertyEntity = _propertiesMapper.ToEntity(createPropertyDto);
+            var propertyEntity = _propertiesMapper.ToEntity(createPropertyDto, userId);
             var result = await _context.properties.AddAsync(propertyEntity);
             await _context.SaveChangesAsync();
 

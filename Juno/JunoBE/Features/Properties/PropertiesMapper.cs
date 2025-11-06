@@ -19,7 +19,7 @@ namespace JunoBE.Features.Properties
         }
 
 
-        public PropertyEntity ToEntity(CreatePropertyDto createPropertyDto)
+        public PropertyEntity ToEntity(CreatePropertyDto createPropertyDto, string userId)
         {
             return new PropertyEntity
             {
@@ -37,7 +37,7 @@ namespace JunoBE.Features.Properties
                 homeType = createPropertyDto.homeType,
                 latitude = createPropertyDto.latitude,
                 longitude = createPropertyDto.longitude,
-                UserEntityId = "8aaa837a-1805-4c02-8f4f-cd3ba8b5e653",
+                UserEntityId = userId,
                 square_meters = createPropertyDto.square_meters
             };
         }

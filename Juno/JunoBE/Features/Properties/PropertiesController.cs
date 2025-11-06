@@ -1,5 +1,7 @@
 using JunoBE.Common;
+using JunoBE.Common.Authorization;
 using JunoBE.Features.Properties.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JunoBE.Features.Properties
@@ -9,10 +11,12 @@ namespace JunoBE.Features.Properties
     public class PropertiesController : ControllerBase
     {
         private readonly PropertiesService _service;
+        private readonly CurrentUser _currentUser;
 
-        public PropertiesController(PropertiesService service)
+        public PropertiesController(PropertiesService service, CurrentUser currentUser)
         {
             _service = service;
+            _currentUser = currentUser;
         }
 
         [HttpGet]
@@ -27,10 +31,11 @@ namespace JunoBE.Features.Properties
             return Ok(await _service.GetPropertyByIdAsync(id));
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> Create([FromForm] CreatePropertyDto createPropertyDto)
         {
-            await _service.Create(createPropertyDto);
+            await _service.Create(createPropertyDto, _currentUser.getUserId());
             return Ok();
         }
     }
