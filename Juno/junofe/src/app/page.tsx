@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import { Metadata } from "next";
 import MapMarker from "@/components/Marker";
 import HouseCard from "@/components/Card";
+import { PaginationWithLinks } from "@/components/Pagination";
 
 
 export const metadata: Metadata = {
@@ -11,18 +12,31 @@ export const metadata: Metadata = {
   description: "Welcome to Juno"
 }
 
-export default async function Page() {
+interface Props {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>
+}
 
-  const data = await fetch('http://localhost:5036/api/properties?pageSize=20&pageNumber=1');
+export default async function Page({ searchParams }: Props) {
+
+  
+  const params = await searchParams;
+  const currentPage = Number(params?.page) || 1;
+  
+  const data = await fetch(`http://localhost:5036/api/properties?pageSize=20&pageNumber=${currentPage}`);
   const posts: PropertiesResponse = await data.json();
+  console.log(params);
+  console.log(currentPage);
 
-
-  const DynamicMap = dynamic(() => import('../components/Map'), {
-    loading: () => (
-      <p>Loading map....</p>
-    ),
-    ssr: !!false
-  });
+  const DynamicMap
+    = dynamic(() => import('../components/Map'), {
+      loading: () => (
+        <p>Loading map....</p>
+      ),
+      ssr: !!false
+    });
 
   return (
     <div className="flex h-[calc(100vh-64px)] ">
@@ -32,7 +46,6 @@ export default async function Page() {
             posts.results.map((e) => (
               <MapMarker
                 key={e.id}
-                popUpTitle={e.id}
                 position={[e.latitude, e.longitude]}
                 data={e}
               />
@@ -49,6 +62,10 @@ export default async function Page() {
             posts.results.map((i) => (
               <HouseCard data={i} key={i.id} />
             ))}
+        </div>
+        <div className="py-2">
+          <PaginationWithLinks totalCount={posts.totalCount} page={currentPage} pageSize={posts.pageSize} />
+
         </div>
       </div>
     </div>

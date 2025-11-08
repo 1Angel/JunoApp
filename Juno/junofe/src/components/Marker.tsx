@@ -7,19 +7,20 @@ import { Ref } from "react";
 import { Properties } from "@/types";
 import HouseCard from "./Card";
 
+
 interface Props {
     position: LatLngExpression
-    popUpTitle: string | number;
+    // popUpTitle: string | number;
     draggable?: boolean;
     marketEvent?: LeafletEventHandlerFnMap | undefined;
     marketRef?: Ref<LeafletMarker<any>> | undefined;
-    data?: Properties
+    data: Properties
 }
 
-export default function MapMarker({ popUpTitle, marketEvent, draggable, marketRef, position, data }: Props) {
+export default function MapMarker({ marketEvent, draggable, marketRef, position, data }: Props) {
 
     const markIcon = new L.Icon({
-        iconUrl: 'marker-icon.png',
+        iconUrl: '/marker-icon.png',
         shadowUrl: "/marker-shadow.png",
         iconSize: [22, 32],
         shadowSize: [32, 32],

@@ -1,6 +1,6 @@
 "use client"
 
-import { Images } from "@/types";
+import { Image } from "@/types";
 import { useState } from "react";
 
 // const images = [
@@ -9,7 +9,7 @@ import { useState } from "react";
 // ];
 
 interface Props{
-  images: Images[]
+  images: Image[]
 }
 
 export default function Carousel({images}: Props) {
@@ -41,13 +41,13 @@ export default function Carousel({images}: Props) {
       </div>
 
       <button
-        onClick={prevSlide}
+        onClick={(e)=>{e.stopPropagation();prevSlide}}
         className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/60 text-gray-800 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white"
       >
         &#10094;
       </button>
       <button
-        onClick={nextSlide}
+        onClick={(e)=> {e.stopPropagation(); nextSlide()}}
         className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/60 text-gray-800 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white"
       >
         &#10095;

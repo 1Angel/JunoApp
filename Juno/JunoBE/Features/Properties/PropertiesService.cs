@@ -77,7 +77,7 @@ namespace JunoBE.Features.Properties
             .Select(x => _propertiesMapper.ToDto(x))
             .ToListAsync();
 
-            return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, properties.Count(), properties);
+            return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, 100, properties);
         }
 
     }

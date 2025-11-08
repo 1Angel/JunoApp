@@ -5,19 +5,21 @@ import "leaflet/dist/leaflet.css";
 import React from "react";
 import { MapContainer, TileLayer } from 'react-leaflet'
 
-interface Props{
+interface Props {
     position?: LatLngExpression | undefined;
     zoom: number;
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
 
-export default function Map({children, position, zoom}: Props) {
+export default function Map( {zoom, position, children }: Props) {
 
     return (
         <MapContainer
-            center={[18.6652909, -71.449683, 409710]}
+            //center={[18.6652909, -71.449683, 409710]}
+            center={position}
             zoom={zoom}
+            
             className="h-full w-full"
         >
             <TileLayer
