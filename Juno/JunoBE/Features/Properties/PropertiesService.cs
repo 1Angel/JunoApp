@@ -43,6 +43,7 @@ namespace JunoBE.Features.Properties
 
         public async Task<PaginationResponse<List<PropertiesDto>>> GET(PaginationRequest paginationRequest)
         {
+            var totalData = await _context.properties.CountAsync();
 
             var query = _context.properties.AsQueryable();
 
@@ -77,7 +78,7 @@ namespace JunoBE.Features.Properties
             .Select(x => _propertiesMapper.ToDto(x))
             .ToListAsync();
 
-            return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, 100, properties);
+            return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, totalData, properties);
         }
 
     }
