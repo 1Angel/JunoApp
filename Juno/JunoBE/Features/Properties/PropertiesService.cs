@@ -43,7 +43,6 @@ namespace JunoBE.Features.Properties
 
         public async Task<PaginationResponse<List<PropertiesDto>>> GET(PaginationRequest paginationRequest)
         {
-            var totalData = await _context.properties.CountAsync();
 
             var query = _context.properties.AsQueryable();
 
@@ -53,6 +52,10 @@ namespace JunoBE.Features.Properties
             }
             //-----todo tomorrow-----
             //add filter by homestatus and hometype
+            if (!string.IsNullOrEmpty(paginationRequest.homestatus))
+            {
+                query = query.Where(x => x.homeStatus == paginationRequest.homestatus);
+            }
             //add filter by price- X
             //add filter by creation date
 
@@ -67,6 +70,9 @@ namespace JunoBE.Features.Properties
             {
                 query = query.Where(x => x.bedrooms == paginationRequest.filterByBeds);
             }
+
+            
+            var totalData = await query.CountAsync();
 
             //pagination
             query = query.Skip((paginationRequest.pageNumber - 1) * paginationRequest.pageSize).Take(paginationRequest.pageSize);

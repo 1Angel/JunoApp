@@ -14,8 +14,9 @@ export const metadata: Metadata = {
 
 interface Props {
   searchParams?: Promise<{
-    query?: string;
+    search?: string;
     page?: string;
+    homestatus?: string
   }>
 }
 
@@ -23,9 +24,11 @@ export default async function Page({ searchParams }: Props) {
 
 
   const params = await searchParams;
+  const search = params?.search || '';
   const currentPage = Number(params?.page) || 1;
+  const homeStatus = params?.homestatus || "FOR_RENT";
 
-  const data = await fetch(`http://localhost:5036/api/properties?pageSize=20&pageNumber=${currentPage}`);
+  const data = await fetch(`http://localhost:5036/api/properties?pageSize=20&pageNumber=${currentPage}&homestatus=${homeStatus}&search=${search}`);
   const posts: PropertiesResponse = await data.json();
   console.log(params);
   console.log(currentPage);
@@ -40,10 +43,10 @@ export default async function Page({ searchParams }: Props) {
 
   return (
     <div>
-      <div className="py-4 px-4 border-b-1 border-black bg-white shadow-2xl">
+      <div className="py-3 px-4 border-b-1 border-black bg-white shadow-2xl">
         <SearchBar />
       </div>
-      <div className="flex h-143">
+      <div className="flex h-145">
         <div className="w-1/2 h-full">
           <DynamicMap zoom={8}>
             {

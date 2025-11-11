@@ -5,6 +5,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 
 interface HomeStatus {
     title: string;
@@ -18,18 +20,45 @@ const homeStatusOptions: HomeStatus[] = [
     },
     {
         title: "En venta",
-        value: "FOR_SELL"
+        value: "FOR_SALE"
     }
 ]
 
 
 export default function SearchBar() {
 
-    var [homeStatus, setHomeStatus] = useState<string>("FOR_RENT");
+    const searchParams = useSearchParams();
+    const pathName = usePathname();
+    const { replace } = useRouter();
 
-    useEffect(() => {
-        console.log(`esta cambiando ${homeStatus}`)
-    }, [homeStatus])
+    const defaultHomeStatus = searchParams.get('homestatus') ?? "FOR_RENT";
+
+    const [homeStatus, setHomeStatus] = useState<string>(defaultHomeStatus);
+
+    //FIX THIS SHIT
+    const handleHomeStatus = () => {
+        console.log(`tu seleccion es `, homeStatus);
+        const params = new URLSearchParams(searchParams);
+        if (homeStatus == "FOR_RENT") {
+            params.set('homestatus', homeStatus);
+            params.set('page', String(1));
+        } else {
+            params.set('homestatus', homeStatus);
+            params.set('page', String(1));
+        }
+        replace(`${pathName}?${params.toString()}`);
+    }
+
+    const handleSearch = useDebouncedCallback((term: string) => {
+        console.log(term);
+        const params = new URLSearchParams(searchParams);
+        if (term) {
+            params.set('search', term)
+        } else {
+            params.delete('search');
+        }
+        replace(`${pathName}?${params.toString()}`);
+    }, 300);
 
     return (
 
@@ -39,12 +68,13 @@ export default function SearchBar() {
                     className="border-1 border-black py-4 hover:border-red-500 hover:border-2 focus:border-red-500 focus:ring-0 focus-visible:ring-0 focus-visible:border-red-500"
                     type="text"
                     placeholder="Ingresa la ciudad"
+                    defaultValue={searchParams.get('search')?.toString()}
+                    onChange={(e) => { handleSearch(e.target.value) }}
                 />
-
             </div>
-            <div className="border-1 rounded-2xl border-black hover:border-red-500 hover:border-2 focus:border-red-500 focus:ring-0 focus-visible:ring-0 focus-visible:border-red-500">
+            <div >
                 <Select value={homeStatus} onValueChange={setHomeStatus}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="font-bold text-sm w-[180px] border-1 border-black hover:border-red-500 hover:border-1 focus:border-red-500 focus:ring-0 focus-visible:ring-0 focus-visible:border-red-500">
                         {homeStatusOptions.find((o) => o.value === homeStatus)?.title}
                     </SelectTrigger>
                     <SelectContent>
@@ -58,6 +88,10 @@ export default function SearchBar() {
                                 ))
                             }
                         </RadioGroup>
+                        <div className="py-2">
+                            <button onClick={handleHomeStatus} className="w-full rounded h-[30px] btn bg-red-500 text-white">Aceptar</button>
+
+                        </div>
                     </SelectContent>
                 </Select>
             </div>

@@ -7,6 +7,7 @@ namespace JunoBE.Common
         public string? search { get; set; }
         //move everything above here to another class an use herencia xd, because maybe i want to use this class multiple times
         public int? filterByBeds { get; set; }
+        public string? homestatus { get; set; }
         public int? minimumPrice { get; set; }
         public int? maximumPrice { get; set; }
     }
