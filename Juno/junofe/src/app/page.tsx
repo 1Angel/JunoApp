@@ -5,6 +5,8 @@ import MapMarker from "@/components/Marker";
 import HouseCard from "@/components/Card";
 import { PaginationWithLinks } from "@/components/Pagination";
 import SearchBar from "@/components/SearchBar";
+import { lazy, Suspense } from "react";
+import { CardSkeleton } from "@/components/CardSkeleton";
 
 
 export const metadata: Metadata = {
@@ -16,7 +18,9 @@ interface Props {
   searchParams?: Promise<{
     search?: string;
     page?: string;
-    homestatus?: string
+    homestatus?: string;
+    minPrice?: string;
+    maxPrice?: string;
   }>
 }
 
@@ -27,19 +31,20 @@ export default async function Page({ searchParams }: Props) {
   const search = params?.search || '';
   const currentPage = Number(params?.page) || 1;
   const homeStatus = params?.homestatus || "FOR_RENT";
+  const minPrice = params?.minPrice || '1000';
+  const maxPrice = params?.maxPrice || '25000';
 
-  const data = await fetch(`http://localhost:5036/api/properties?pageSize=20&pageNumber=${currentPage}&homestatus=${homeStatus}&search=${search}`);
+  const data = await fetch(`http://localhost:5036/api/properties?pageSize=20&pageNumber=${currentPage}&homestatus=${homeStatus}&search=${search}&minimumPrice=${minPrice}&maximumPrice=${maxPrice}`);
   const posts: PropertiesResponse = await data.json();
-  console.log(params);
-  console.log(currentPage);
 
-  const DynamicMap
-    = dynamic(() => import('../components/Map'), {
-      loading: () => (
-        <p>Loading map....</p>
-      ),
-      ssr: !!false
-    });
+  const LazyHouseCard = lazy(()=> import('../components/Card'));
+
+  const DynamicMap = dynamic(() => import('../components/Map'), {
+    loading: () => (
+      <p>Loading map....</p>
+    ),
+    ssr: !!false
+  });
 
   return (
     <div>
@@ -81,6 +86,29 @@ export default async function Page({ searchParams }: Props) {
         </div>
       </div>
     </div>
+
+
+    // <div>
+    //   <div className="py-3 px-4 border-b-1 border-black bg-white shadow-2xl">
+    //     <SearchBar />
+    //   </div>
+    //   <div className="grid lg:grid-cols-4 px-4 py-4 md:grid-cols-3 gap-4 sm:grid-cols-1">
+    //     <Suspense fallback={<CardSkeleton />}>
+    //       {
+    //         posts.results.map((i) => (
+    //           <LazyHouseCard data={i} key={i.id} />
+    //         ))}
+    //     </Suspense>
+    //   </div>
+    //   <div className="py-2">
+    //     <PaginationWithLinks
+    //       totalCount={posts.totalCount}
+    //       page={currentPage}
+    //       pageSize={posts.pageSize}
+    //     />
+
+    //   </div>
+    // </div>
   )
 }
 

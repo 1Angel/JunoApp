@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JunoBE.Migrations
 {
     /// <inheritdoc />
-    public partial class userEntityAdded : Migration
+    public partial class firstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,6 +31,8 @@ namespace JunoBE.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
+                    first_name = table.Column<string>(type: "text", nullable: false),
+                    last_name = table.Column<string>(type: "text", nullable: false),
                     posts = table.Column<int>(type: "integer", nullable: false),
                     suscriptionStatus = table.Column<string>(type: "text", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -211,6 +213,32 @@ namespace JunoBE.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "bookmarks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserEntityId = table.Column<string>(type: "text", nullable: false),
+                    PropertyEntityId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_bookmarks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_bookmarks_AspNetUsers_UserEntityId",
+                        column: x => x.UserEntityId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_bookmarks_properties_PropertyEntityId",
+                        column: x => x.PropertyEntityId,
+                        principalTable: "properties",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "propertiesImages",
                 columns: table => new
                 {
@@ -274,6 +302,16 @@ namespace JunoBE.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_bookmarks_PropertyEntityId",
+                table: "bookmarks",
+                column: "PropertyEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_bookmarks_UserEntityId",
+                table: "bookmarks",
+                column: "UserEntityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_properties_UserEntityId",
                 table: "properties",
                 column: "UserEntityId");
@@ -304,6 +342,9 @@ namespace JunoBE.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "bookmarks");
 
             migrationBuilder.DropTable(
                 name: "propertiesImages");

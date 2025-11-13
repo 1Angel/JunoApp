@@ -56,13 +56,13 @@ namespace JunoBE.Features.Properties
             {
                 query = query.Where(x => x.homeStatus == paginationRequest.homestatus);
             }
-            //add filter by price- X
             //add filter by creation date
 
             //filter by price
             if (!string.IsNullOrEmpty(paginationRequest.minimumPrice.ToString()) && !string.IsNullOrEmpty(paginationRequest.maximumPrice.ToString()))
             {
-                query = query.Where(x => x.price >= paginationRequest.minimumPrice && x.price <= paginationRequest.maximumPrice);
+                query = query.Where(x => x.price >= paginationRequest.minimumPrice && x.price <= paginationRequest.maximumPrice)
+                .OrderBy(x=>x.price);
             }
 
             //add filter by number of bedrooms

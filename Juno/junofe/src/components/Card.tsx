@@ -44,7 +44,13 @@ export default function HouseCard({ data }: Props) {
                 </span>
             </div>
             <div className="px-6 pb-2">
-                <p className="text-sm">{data.address.street}, {data.address.city}, {data.address.province}</p>
+                    <p className="text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 inline-block">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                        </svg>
+                        {data.address.street}, {data.address.city}, {data.address.province}</p>
+
                 <p className="mt-1 text-xs">Vendido por {data.user.first_name} {data.user.last_name}</p>
             </div>
 

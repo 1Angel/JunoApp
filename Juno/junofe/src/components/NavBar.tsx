@@ -1,6 +1,8 @@
+"use client"
+
 import Link from "next/link";
 
-export default function NavBar() {
+export default function NavBar() {  
 
     const isLogegedIn = false;
 
@@ -12,9 +14,8 @@ export default function NavBar() {
                         <div>
                             <img src="infinityLogo.png" className="size-12 cursor-pointer" alt="logo here" />
                         </div>
-                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" ><Link href='/'>Home</Link></button>
-                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" >Find a Job</button>
-                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500">Find a Company</button>
+                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" ><Link href={{pathname: '/', query: {page: '1'}}}>Inicio</Link></button>
+                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" ><Link href={{pathname: '/', query: {page: '1', homestatus: 'FOR_SALE', minPrice: '1000', maxPrice: '25000'}}}>Buscar casa</Link></button>
 
                         {/* <div className="m-2 pl-4 p-1 border-1 rounded-3xl focus-within:border-red-500 focus-within:border-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JunoBE.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251106005154_bookmarksFeatureAdded")]
-    partial class bookmarksFeatureAdded
+    [Migration("20251112232201_firstMigration")]
+    partial class firstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
