@@ -1,11 +1,27 @@
 import Map from "@/components/Map";
 import MapMarker from "@/components/Marker";
 import { Properties } from "@/types";
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 
-interface Props {
-    params: { Id: number }
+type Props = {
+    params: Promise<{Id: string}>
 }
+
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+    const id = (await params).Id;
+
+        const data = await fetch(`http://localhost:5036/api/properties/${id}`);
+        const property: Properties = await data.json();
+
+
+    return {
+        title: `${property.address.street}, ${property.address.city} - Juno`,
+        description: `${property.description}`,
+        
+    }
+}
+
 
 export default async function page({ params }: Props) {
 

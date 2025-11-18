@@ -67,13 +67,13 @@ namespace JunoBE.Features.User
             var user = await _userService.finByEmail(login.email);
             if (user == null)
             {
-                return BadRequest("El Usuario no existe");
+                return BadRequest(new {message= "El usuario no existe", status = HttpStatusCode.BadRequest});
             }
 
             var comparePassword = await _userService.ComparePassword(user, login.password);
             if (!comparePassword)
             {
-                return BadRequest("La contraseña no coincide");
+                return BadRequest(new {message= "La contraseña no coincide", status = HttpStatusCode.BadRequest});
             }
 
             var token = tokenService.GeneratedToken(user);

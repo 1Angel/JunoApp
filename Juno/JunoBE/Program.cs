@@ -72,6 +72,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("nextFE", config =>
     {
         config.AllowAnyHeader()
+        .WithOrigins("http://localhost:3000")
         .AllowCredentials()
         .AllowAnyMethod();
     });

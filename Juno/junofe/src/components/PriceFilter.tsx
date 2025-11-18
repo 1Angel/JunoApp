@@ -5,6 +5,7 @@ import { Input } from "./ui/input";
 import { Select, SelectContent, SelectTrigger } from "./ui/select";
 import { useState } from "react";
 import clsx from "clsx";
+import { Button } from "./ui/button";
 
 function formatPrices(number: number, locale = "en-US", currency = "USD") {
     const formatter = new Intl.NumberFormat(locale, {
@@ -41,7 +42,7 @@ export default function PriceFilter() {
     }
 
     return (
-        <div>
+            <div className="w-full sm:w-auto px-2 py-3 transition-colors cursor-pointer">
             <Select>
                 <SelectTrigger value={prices} className={clsx(
                     "w-[180px] border font-bold",
@@ -62,7 +63,7 @@ export default function PriceFilter() {
 
                     </div>
                     <div className="py-2">
-                        <button onClick={handlerPrices} className="w-full rounded h-[30px] btn bg-red-500 text-white cursor-pointer hover:bg-red-700 hover:text-white">Aceptar</button>
+                        <Button onClick={handlerPrices} className="w-full rounded h-[30px] btn bg-red-500 text-white cursor-pointer hover:bg-red-700 hover:text-white">Aceptar</Button>
 
                     </div>
                 </SelectContent>

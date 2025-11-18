@@ -45,7 +45,7 @@ export default function HomeStatusFilter() {
     }
 
     return (
-        <div>
+            <div className="w-full sm:w-auto px-2 py-3 transition-colors cursor-pointer">
             <Select value={homeStatus} onValueChange={setHomeStatus}>
                 <SelectTrigger className={clsx(
                     "w-[180px] border",

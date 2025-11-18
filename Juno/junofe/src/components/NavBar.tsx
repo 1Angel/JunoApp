@@ -1,61 +1,243 @@
 "use client"
 
+import { Home, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+import { Button } from "./ui/button";
 
-export default function NavBar() {  
-
-    const isLogegedIn = false;
-
-    return (
-        <nav className="border-b-1 border-black bg-white">
-            <div>
-                <div className="flex justify-between">
-                    <div className="flex">
-                        <div>
-                            <img src="infinityLogo.png" className="size-12 cursor-pointer" alt="logo here" />
-                        </div>
-                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" ><Link href={{pathname: '/', query: {page: '1'}}}>Inicio</Link></button>
-                        <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500" ><Link href={{pathname: '/', query: {page: '1', homestatus: 'FOR_SALE', minPrice: '1000', maxPrice: '25000'}}}>Buscar casa</Link></button>
-
-                        {/* <div className="m-2 pl-4 p-1 border-1 rounded-3xl focus-within:border-red-500 focus-within:border-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" className="size-6 inline-block text-red-500">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                            </svg>
-                            <input className="w-90 rounded-3xl  pl-2 focus:outline-none" placeholder="Search your dream job" type="text" />
-                        </div> */}
-                    </div>
-                    {/* <!-----autenticacion---> */}
-                    <div className="flex m-2">
-                        {!isLogegedIn ? (
-                            <>
-                                <div>
-
-                                    <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 inline-block">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                    </svg><Link href={'/auth/login'}>Login</Link></button>
-                                </div>
-                                <div>
-                                    <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500">
-                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 inline-block">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-                                    </svg><Link href="/auth/register">Register</Link></button>
-                                </div>
-                            </>
-                        ) : (
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 inline-block">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-                                    </svg>
-                                    <button className="m-2 font-medium cursor-pointer border-b-4 border-transparent hover:border-red-500">Hola jiji</button>
-                                </div>
-                        )}
-                    </div>
-
-                </div>
-            </div >
-        </nav >
-    )
+interface NavLinks {
+  title: string;
+  path: string;
 }
+
+export default function NavBar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isProfileOpen, setIsProfileOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userProfile, setUserProfile] = useState({
+    name: 'John Doe',
+    email: 'john@example.com',
+    avatar: 'https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'
+  })
+  const handleSignIn = () => {
+    // Simulate sign in
+    setIsAuthenticated(true)
+    setIsMenuOpen(false)
+  }
+
+  const handleSignOut = () => {
+    setIsAuthenticated(false)
+    setIsProfileOpen(false)
+  }
+
+  const navLinks: NavLinks[] = [
+    {
+      title: "Inicio",
+      path: "/"
+    },
+    {
+      title: "Buscar",
+      path: "/properties?page=1&homestatus=FOR_SALE&minPrice=1000&maxPrice=30000"
+    },
+    {
+      title: "Sobre Nosotros",
+      path: "/about"
+    }
+  ]
+
+
+  return (
+    // <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    //   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    //     <div className="flex h-16 items-center justify-between">
+    //       <div className="flex items-center gap-2">
+    //         <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-red-700">
+    //           <Home className="w-6 h-6 text-primary-foreground" />
+    //         </div>
+    //         <span className="text-xl font-bold text-foreground">Juno</span>
+    //       </div>
+
+    //       <nav className="hidden md:flex items-center gap-8">
+    //         <Link href={{ pathname: '/properties', query: { page: '1', homestatus: 'FOR_SALE', minPrice: '1000', maxPrice: '30000' } }} className="text-sm text-foreground hover:text-primary transition-colors">Buy</Link>
+    //         <a href="#" className="text-sm text-foreground hover:text-primary transition-colors">Sell</a>
+    //         <a href="#" className="text-sm text-foreground hover:text-primary transition-colors">Rent</a>
+    //         <a href="#" className="text-sm text-foreground hover:text-primary transition-colors">About</a>
+    //       </nav>
+    //       <Link href={'/auth/login'}>
+    //         <Button className="bg-red-700 hover:bg-red-800/90 text-primary-foreground cursor-pointer">Sign In</Button>
+    //       </Link>
+    //     </div>
+    //   </div>
+    // </header>
+    <>
+      {/* Top Navigation Bar */}
+        <div className="sticky top-0 z-40 border-b border-gray-200 bg-white w-full">        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="w-8 h-8 bg-red-700 rounded-md flex items-center justify-center">
+                <span className="text-white font-bold text-lg">J</span>
+              </div>
+              <span className="hidden sm:inline text-xl font-bold text-foreground">Juno</span>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  href={`${link.path}`}
+                  className="text-foreground font-medium hover:text-gray-600 transition-colors text-sm"
+                >
+                  {link.title}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="flex items-center gap-3">
+              {isAuthenticated ? (
+                // User Profile Dropdown
+                <div className="relative hidden sm:block">
+                  <button
+                    onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    className="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-colors"
+                  >
+                    <img
+                      src={userProfile.avatar || "/placeholder.svg"}
+                      alt={userProfile.name}
+                      className="w-8 h-8 rounded-full border-2 border-gray-300"
+                    />
+                  </button>
+
+                  {/* Profile Dropdown Menu */}
+                  {isProfileOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg border border-gray-200 shadow-lg z-50">
+                      <div className="px-4 py-3 border-b border-gray-200">
+                        <p className="font-medium text-foreground text-sm">{userProfile.name}</p>
+                        <p className="text-gray-500 text-xs">{userProfile.email}</p>
+                      </div>
+                      <div className="py-2">
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 transition-colors"
+                        >
+                          My Profile
+                        </a>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 transition-colors"
+                        >
+                          My Properties
+                        </a>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 transition-colors"
+                        >
+                          Settings
+                        </a>
+                      </div>
+                      <div className="border-t border-gray-200 py-2">
+                        <button
+                          onClick={handleSignOut}
+                          className="w-full text-left px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center gap-2 transition-colors"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          Sign Out
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                // Sign In Button
+                <Button 
+                  onClick={handleSignIn}
+                  className="hidden sm:inline px-6 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors text-sm"
+                >
+                  Sign In
+                </Button>
+              )}
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors"
+              >
+                {isMenuOpen ? (
+                  <X className="w-5 h-5" />
+                ) : (
+                  <Menu className="w-5 h-5" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-200 pt-4">
+              <nav className="flex flex-col gap-3">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    href={`${link.path}`}
+                    className="text-foreground font-medium hover:text-gray-600 transition-colors px-2 py-1"
+                  >
+                    {link.title}
+                  </Link>
+                ))}
+                {isAuthenticated ? (
+                  <div className="mt-3 pt-3 border-t border-gray-200">
+                    <div className="flex items-center gap-3 px-2 py-2 mb-3">
+                      <img
+                        src={userProfile.avatar || "/placeholder.svg"}
+                        alt={userProfile.name}
+                        className="w-8 h-8 rounded-full border-2 border-gray-300"
+                      />
+                      <div>
+                        <p className="font-medium text-foreground text-sm">{userProfile.name}</p>
+                        <p className="text-gray-500 text-xs">{userProfile.email}</p>
+                      </div>
+                    </div>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors"
+                    >
+                      My Profile
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors"
+                    >
+                      My Properties
+                    </a>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors"
+                    >
+                      Settings
+                    </a>
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full mt-2 px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center justify-start gap-2 transition-colors rounded-md"
+                    >
+                      <LogOut className="w-4 h-4" />
+                      Sign Out
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleSignIn}
+                    className="w-full px-4 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors mt-2"
+                  >
+                    Sign In
+                  </button>
+                )}
+              </nav>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+
+  )
+}   
