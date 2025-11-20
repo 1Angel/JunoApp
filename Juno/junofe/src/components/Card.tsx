@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Bath, Bed, Heart, MapPin, Ruler } from "lucide-react";
 import { Button } from "./ui/button";
+import { useCurrency } from "@/hooks/useCurrency";
 
 interface Props {
     data: Properties
@@ -18,6 +19,7 @@ const RDCurrency = Intl.NumberFormat("en-US", {
 
 export default function HouseCard({ data }: Props) {
     const router = useRouter();
+    const currency  = useCurrency(data.price);
     return (
         // <div className="max-w-sm rounded overflow-hidden shadow-lg">
         //     <img className="w-full" src="https://tse3.mm.bing.net/th/id/OIP.5kGyoxY2XZDixSK0JrZLjQHaFE?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sunset in the mountains" />
@@ -73,9 +75,9 @@ export default function HouseCard({ data }: Props) {
 
             <div className="p-5">
                 <div className="mb-3">
-                    <div className="text-2xl font-bold text-primary mb-1">{data.price}</div>
+                    <div className="text-2xl font-bold text-primary mb-1">DOP {currency}</div>
                     <div className="flex items-start gap-1">
-                        <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                        <MapPin className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-2" />
                         <div>
                             <div className="font-semibold text-foreground">{data.address.street}</div>
                             <div className="text-sm text-muted-foreground">{data.address.city}</div>

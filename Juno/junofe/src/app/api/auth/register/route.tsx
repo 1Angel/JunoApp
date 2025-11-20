@@ -1,25 +1,21 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-
-export interface LoginPayload {
-    email: string;
-    password: string;
-}
-
 
 export async function POST(req: Request) {
 
     try {
         // leer el JSON enviado desde el frontend
-        const {email, password} = await req.json();
+        const {first_name,last_name, phone_number, email, password} = await req.json();
 
-        const res = await fetch(`${process.env.API_URL}/auth/login`, {
+        const res = await fetch(`${process.env.API_URL}/auth/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             credentials: "include",
             body: JSON.stringify({
+                first_name,
+                last_name,
+                phone_number,
                 email,
                 password
             })

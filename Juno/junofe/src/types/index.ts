@@ -17,7 +17,7 @@ export interface Properties {
     homeStatus:    string;
     homeType:      string;
     square_meters: number;
-    user:          User;
+    user:          IUser;
     images:        Image[];
     createdAt:     Date;
 }
@@ -32,7 +32,7 @@ export interface Image {
     imageUrl: string;
 }
 
-export interface User {
+export interface IUser {
     id:         string;
     first_name: string;
     last_name:  string;

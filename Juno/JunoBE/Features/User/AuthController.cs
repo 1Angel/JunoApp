@@ -1,4 +1,6 @@
 using System.Net;
+using FluentValidation;
+using Humanizer;
 using JunoBE.Common;
 using JunoBE.Common.Authorization;
 using JunoBE.Features.Cookies;
@@ -41,7 +43,7 @@ namespace JunoBE.Features.User
             var user = await _userService.finByEmail(register.email);
             if (user != null)
             {
-                return BadRequest(new {message = "El usuario ya existe", error= HttpStatusCode.BadRequest});
+                return BadRequest(new {errors = "El usuario ya existe", error= HttpStatusCode.BadRequest});
             }
 
             var newUser = userMapper.ToEntity(register);
@@ -57,7 +59,7 @@ namespace JunoBE.Features.User
 
             //generated token jiji
             var token = tokenService.GeneratedToken(newUser);
-
+            cookieService.setCookie(token, HttpContext);
             return Ok(new {message= "Created", token = token});
         }
 
@@ -80,6 +82,13 @@ namespace JunoBE.Features.User
             cookieService.setCookie(token, HttpContext);
 
             return Ok(new {message ="Logged In", token = token});
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult<UserDto>> CurrentUser()
+        {
+            return Ok(await _userService.getCurrentUser(_currentUser.getUserId()));
         }
     }
 }

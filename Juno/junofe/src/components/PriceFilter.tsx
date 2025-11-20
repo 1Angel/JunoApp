@@ -50,7 +50,7 @@ export default function PriceFilter() {
                         ? "border-red-500 bg-red-50 text-red-700"
                         : "border-gray-300"
                 )}>
-                    {prices}
+                    <p className="text-black">{prices}</p>
                 </SelectTrigger>
                 <SelectContent>
                     <div className="inline-block pr-2 w-25">

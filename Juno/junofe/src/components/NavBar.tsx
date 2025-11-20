@@ -4,6 +4,7 @@ import { Home, LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import useAuthStore from "@/store/AuthStore";
 
 interface NavLinks {
   title: string;
@@ -11,24 +12,28 @@ interface NavLinks {
 }
 
 export default function NavBar() {
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  //const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  const {isAuthenticated, LogOutUser} = useAuthStore();
+
   const [userProfile, setUserProfile] = useState({
     name: 'John Doe',
     email: 'john@example.com',
     avatar: 'https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'
   })
-  const handleSignIn = () => {
-    // Simulate sign in
-    setIsAuthenticated(true)
-    setIsMenuOpen(false)
-  }
+  // const handleSignIn = () => {
+  //   // Simulate sign in
+  //   setIsAuthenticated(true)
+  //   setIsMenuOpen(false)
+  // }
 
-  const handleSignOut = () => {
-    setIsAuthenticated(false)
-    setIsProfileOpen(false)
-  }
+  // const handleSignOut = () => {
+  //   setIsAuthenticated(false)
+  //   setIsProfileOpen(false)
+  // }
 
   const navLinks: NavLinks[] = [
     {
@@ -138,7 +143,7 @@ export default function NavBar() {
                       </div>
                       <div className="border-t border-gray-200 py-2">
                         <button
-                          onClick={handleSignOut}
+                          onClick={LogOutUser}
                           className="w-full text-left px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center gap-2 transition-colors"
                         >
                           <LogOut className="w-4 h-4" />
@@ -150,12 +155,12 @@ export default function NavBar() {
                 </div>
               ) : (
                 // Sign In Button
-                <Button 
-                  onClick={handleSignIn}
-                  className="hidden sm:inline px-6 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors text-sm"
+                <Link 
+                href={'/auth/login'}
+                className="hidden sm:inline px-6 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors text-sm"
                 >
                   Sign In
-                </Button>
+                </Link>
               )}
 
               {/* Mobile Menu Button */}
@@ -217,7 +222,7 @@ export default function NavBar() {
                       Settings
                     </a>
                     <button
-                      onClick={handleSignOut}
+                      onClick={LogOutUser}
                       className="w-full mt-2 px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center justify-start gap-2 transition-colors rounded-md"
                     >
                       <LogOut className="w-4 h-4" />
@@ -225,12 +230,13 @@ export default function NavBar() {
                     </button>
                   </div>
                 ) : (
-                  <button
-                    onClick={handleSignIn}
+                  <Link
+                    //onClick={handleSignIn}
+                    href={'/auth/login'}
                     className="w-full px-4 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors mt-2"
                   >
                     Sign In
-                  </button>
+                  </Link>
                 )}
               </nav>
             </div>

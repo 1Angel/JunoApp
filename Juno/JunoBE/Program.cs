@@ -1,5 +1,7 @@
 using System.Text;
 using Azure.Storage.Blobs;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using JunoBE.Common.Authorization;
 using JunoBE.Common.Services;
 using JunoBE.Data;
@@ -93,6 +95,10 @@ builder.Services.AddSingleton<UserMapper>();
 //azure
 builder.Services.AddSingleton<IUploadService, UploadService>();
 builder.Services.AddSingleton(_ => new BlobServiceClient(builder.Configuration.GetConnectionString("azureConn")));
+
+//fluent validation
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly, includeInternalTypes: true);
+builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
