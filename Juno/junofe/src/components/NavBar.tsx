@@ -1,9 +1,8 @@
 "use client"
 
-import { Home, LogOut, Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "./ui/button";
 import useAuthStore from "@/store/AuthStore";
 
 interface NavLinks {
@@ -12,28 +11,21 @@ interface NavLinks {
 }
 
 export default function NavBar() {
-  
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isProfileOpen, setIsProfileOpen] = useState(false)
-  //const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-  const {isAuthenticated, LogOutUser} = useAuthStore();
 
-  const [userProfile, setUserProfile] = useState({
-    name: 'John Doe',
-    email: 'john@example.com',
-    avatar: 'https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'
-  })
-  // const handleSignIn = () => {
-  //   // Simulate sign in
-  //   setIsAuthenticated(true)
-  //   setIsMenuOpen(false)
-  // }
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  // const handleSignOut = () => {
-  //   setIsAuthenticated(false)
-  //   setIsProfileOpen(false)
-  // }
+  const { isAuthenticated, LogOutUser, user } = useAuthStore();
+
+  const logOut = async () => {
+    await fetch(`http://localhost:5036/api/auth/logout`,
+      {
+        method: "POST",
+        credentials: "include"
+      }
+    );
+    LogOutUser();
+  }
 
   const navLinks: NavLinks[] = [
     {
@@ -76,7 +68,8 @@ export default function NavBar() {
     // </header>
     <>
       {/* Top Navigation Bar */}
-        <div className="sticky top-0 z-40 border-b border-gray-200 bg-white w-full">        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div className="sticky top-0 z-40 border-b border-gray-200 bg-white w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2 flex-shrink-0">
@@ -108,8 +101,8 @@ export default function NavBar() {
                     className="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-colors"
                   >
                     <img
-                      src={userProfile.avatar || "/placeholder.svg"}
-                      alt={userProfile.name}
+                      src='https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'
+                      alt={user?.first_name}
                       className="w-8 h-8 rounded-full border-2 border-gray-300"
                     />
                   </button>
@@ -118,8 +111,8 @@ export default function NavBar() {
                   {isProfileOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg border border-gray-200 shadow-lg z-50">
                       <div className="px-4 py-3 border-b border-gray-200">
-                        <p className="font-medium text-foreground text-sm">{userProfile.name}</p>
-                        <p className="text-gray-500 text-xs">{userProfile.email}</p>
+                        <p className="font-medium text-foreground text-sm">{user?.first_name} {user?.last_name} </p>
+                        <p className="text-gray-500 text-xs">{user?.email}</p>
                       </div>
                       <div className="py-2">
                         <a
@@ -143,8 +136,8 @@ export default function NavBar() {
                       </div>
                       <div className="border-t border-gray-200 py-2">
                         <button
-                          onClick={LogOutUser}
-                          className="w-full text-left px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center gap-2 transition-colors"
+                          onClick={logOut}
+                          className="cursor-pointer w-full text-left px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center gap-2 transition-colors"
                         >
                           <LogOut className="w-4 h-4" />
                           Sign Out
@@ -155,9 +148,9 @@ export default function NavBar() {
                 </div>
               ) : (
                 // Sign In Button
-                <Link 
-                href={'/auth/login'}
-                className="hidden sm:inline px-6 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors text-sm"
+                <Link
+                  href={'/auth/login'}
+                  className="hidden sm:inline px-6 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors text-sm"
                 >
                   Sign In
                 </Link>
@@ -194,13 +187,13 @@ export default function NavBar() {
                   <div className="mt-3 pt-3 border-t border-gray-200">
                     <div className="flex items-center gap-3 px-2 py-2 mb-3">
                       <img
-                        src={userProfile.avatar || "/placeholder.svg"}
-                        alt={userProfile.name}
+                        src='https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'
+                        alt={user?.first_name}
                         className="w-8 h-8 rounded-full border-2 border-gray-300"
                       />
                       <div>
-                        <p className="font-medium text-foreground text-sm">{userProfile.name}</p>
-                        <p className="text-gray-500 text-xs">{userProfile.email}</p>
+                        <p className="font-medium text-foreground text-sm">{user?.first_name} {user?.last_name}</p>
+                        <p className="text-gray-500 text-xs">{user?.email}</p>
                       </div>
                     </div>
                     <a
@@ -222,8 +215,8 @@ export default function NavBar() {
                       Settings
                     </a>
                     <button
-                      onClick={LogOutUser}
-                      className="w-full mt-2 px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center justify-start gap-2 transition-colors rounded-md"
+                      onClick={logOut}
+                      className="cursor-pointer w-full mt-2 px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center justify-start gap-2 transition-colors rounded-md"
                     >
                       <LogOut className="w-4 h-4" />
                       Sign Out

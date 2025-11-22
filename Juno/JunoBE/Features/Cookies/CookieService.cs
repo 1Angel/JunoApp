@@ -18,5 +18,10 @@ namespace JunoBE.Features.Cookies
                 SameSite = SameSiteMode.None
             });
         }
+
+        public void DeleteCookie(string key, HttpContext httpContext)
+        {
+            httpContext.Response.Cookies.Delete(key);
+        }
     }
 }

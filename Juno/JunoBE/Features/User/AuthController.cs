@@ -85,10 +85,19 @@ namespace JunoBE.Features.User
         }
 
         [Authorize]
+        [HttpPost("logout")]
+        public async Task<ActionResult> Logout()
+        {
+            cookieService.DeleteCookie("accessToken", HttpContext);
+            return Ok();
+        }
+
+        [Authorize]
         [HttpGet("me")]
         public async Task<ActionResult<UserDto>> CurrentUser()
         {
             return Ok(await _userService.getCurrentUser(_currentUser.getUserId()));
         }
+        
     }
 }

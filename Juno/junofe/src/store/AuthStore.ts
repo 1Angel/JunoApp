@@ -1,7 +1,7 @@
 import { IUser } from "@/types";
 import { create } from "zustand";
 
-interface IAuthStore {
+export interface IAuthStore {
     user: IUser | null;
     isAuthenticated: boolean;
     LogIn: (userinfo: IUser)=> void;
