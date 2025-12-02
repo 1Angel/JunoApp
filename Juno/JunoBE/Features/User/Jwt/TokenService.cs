@@ -14,7 +14,7 @@ namespace JunoBE.Features.User.Jwt
             _jwtSettings = settings.Value;
         }
 
-        public string GeneratedToken(UserEntity user)
+        public string GenerateAccessToken(UserEntity user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -37,6 +37,11 @@ namespace JunoBE.Features.User.Jwt
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
 
+        }
+
+        public string GenerateRefreshToken()
+        {
+            return Guid.NewGuid().ToString();
         }
     }
 }

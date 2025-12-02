@@ -7,9 +7,9 @@ namespace JunoBE.Features.Cookies
 {
     public class CookieService
     {
-        public void setCookie(string value, HttpContext httpContext)
+        public void setCookie(string key, string value, HttpContext httpContext)
         {
-            httpContext.Response.Cookies.Append("accessToken", value, new CookieOptions
+            httpContext.Response.Cookies.Append(key, value, new CookieOptions
             {
                 Expires = DateTimeOffset.UtcNow.AddMonths(1),
                 HttpOnly = true,

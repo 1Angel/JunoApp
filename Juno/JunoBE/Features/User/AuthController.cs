@@ -58,8 +58,8 @@ namespace JunoBE.Features.User
             }
 
             //generated token jiji
-            var token = tokenService.GeneratedToken(newUser);
-            cookieService.setCookie(token, HttpContext);
+            var token = tokenService.GenerateAccessToken(newUser);
+            cookieService.setCookie("accessToken",token, HttpContext);
             return Ok(new {message= "Created", token = token});
         }
 
@@ -78,8 +78,8 @@ namespace JunoBE.Features.User
                 return BadRequest(new {message= "La contraseña no coincide", status = HttpStatusCode.BadRequest});
             }
 
-            var token = tokenService.GeneratedToken(user);
-            cookieService.setCookie(token, HttpContext);
+            var token = tokenService.GenerateAccessToken(user);
+            cookieService.setCookie("accessToken",token, HttpContext);
 
             return Ok(new {message ="Logged In", token = token});
         }
