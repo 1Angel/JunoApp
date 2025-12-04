@@ -28,7 +28,12 @@ namespace JunoBE.Features.Properties
         [HttpGet("{id}")]
         public async Task<ActionResult<PropertiesDto>> GetbyId([FromRoute] int id)
         {
-            return Ok(await _service.GetPropertyByIdAsync(id));
+            var property = await _service.GetPropertyByIdAsync(id);
+            if (property == null)
+            {
+                return NotFound();
+            }
+            return Ok(property);
         }
 
         [Authorize]

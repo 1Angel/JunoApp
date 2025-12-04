@@ -37,9 +37,6 @@ export default function MapMarker({ marketEvent, draggable, marketRef, position,
             draggable={draggable}
             ref={marketRef}
         >
-            <Popup>
-                <HouseCard data={data}/>
-            </Popup>
         </Marker>
     )
 }

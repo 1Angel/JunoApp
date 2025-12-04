@@ -30,7 +30,7 @@ namespace JunoBE.Features.Properties
             await propertyimageService.UploadImages(result.Entity.Id, createPropertyDto.image);
         }
 
-        public async Task<PropertiesDto> GetPropertyByIdAsync(int propertyId)
+        public async Task<PropertiesDto?> GetPropertyByIdAsync(int propertyId)
         {
             return await _context.properties
             .Where(x => x.Id == propertyId)
@@ -38,7 +38,7 @@ namespace JunoBE.Features.Properties
             .Include(x=>x.user)
             .Include(x=>x.propertiesImage)
             .Select(x => _propertiesMapper.ToDto(x))
-            .FirstAsync();
+            .FirstOrDefaultAsync();
         }
 
         public async Task<PaginationResponse<List<PropertiesDto>>> GET(PaginationRequest paginationRequest)
@@ -48,7 +48,7 @@ namespace JunoBE.Features.Properties
 
             if (!string.IsNullOrEmpty(paginationRequest.search))
             {
-                query = query.Where(x => x.address!.city == paginationRequest.search);
+                query = query.Where(x => EF.Functions.ILike(x.address.city, $"%{paginationRequest.search}%"));
             }
             //-----todo tomorrow-----
             //add filter by homestatus and hometype

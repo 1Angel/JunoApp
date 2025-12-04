@@ -19,7 +19,7 @@ const RDCurrency = Intl.NumberFormat("en-US", {
 
 export default function HouseCard({ data }: Props) {
     const router = useRouter();
-    const currency  = useCurrency(data.price);
+    const currency = useCurrency(data.price);
     return (
         // <div className="max-w-sm rounded overflow-hidden shadow-lg">
         //     <img className="w-full" src="https://tse3.mm.bing.net/th/id/OIP.5kGyoxY2XZDixSK0JrZLjQHaFE?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sunset in the mountains" />
@@ -101,7 +101,9 @@ export default function HouseCard({ data }: Props) {
                 </div>
 
                 <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
-                    View Details
+                    <Link href={`/home-details/${data.id}`}>                    
+                        View Details
+                    </Link>
                 </Button>
             </div>
         </div>

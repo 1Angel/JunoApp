@@ -16,8 +16,8 @@ export default function Map( {zoom, position, children }: Props) {
 
     return (
         <MapContainer
-            center={[18.6652909, -71.449683, 409710]}
-            //center={position}
+            //center={[18.6652909, -71.449683, 409710]}
+            center={position}
             zoom={zoom}
             
             className="h-full w-full"
