@@ -1,3 +1,6 @@
+import Carousel from "@/components/Carousel";
+import { CarouselThumb } from "@/components/CarouselThumb";
+import { CarouselDemo } from "@/components/ImagesCarousel";
 import ImagesCarousel from "@/components/ImagesCorousel";
 import Map from "@/components/Map";
 import MapMarker from "@/components/Marker";
@@ -83,11 +86,14 @@ export default async function page({ params }: Props) {
 
                     <div className="lg:col-span-2">
 
-                        <div className="relative w-full h-96 sm:h-[500px] rounded-2xl overflow-hidden mb-6 bg-gray-200">
-                            <ImagesCarousel slides={property.images} options={OPTIONS}/>
+                        <div className="mb-6 w-full relative">
+                            <Carousel images={property.images} />
+                            {/* <div className="flex justify-center m-2">
+                                <CarouselThumb images={property.images} />
+
+                            </div> */}
                         </div>
 
-                        {/* Tabs */}
                         <div className="border-b border-gray-200 mb-8">
                             {/* <div className="flex gap-8">
                                 {["overview", "features", "location"].map((tab) => (

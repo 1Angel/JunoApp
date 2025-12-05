@@ -25,7 +25,7 @@ export default function Carousel({images}: Props) {
   };
 
   return (
-    <div className="relative w-full max-w-xl mx-auto overflow-hidden rounded-lg shadow-lg group">
+    <div className="relative w-full mx-auto overflow-hidden rounded-lg shadow-lg group">
       <div
         className="flex transition-transform duration-500"
         style={{ transform: `translateX(-${index * 100}%)` }}
@@ -41,7 +41,7 @@ export default function Carousel({images}: Props) {
       </div>
 
       <button
-        onClick={(e)=>{e.stopPropagation();prevSlide}}
+        onClick={(e)=>{e.stopPropagation();prevSlide()}}
         className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/60 text-gray-800 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-white"
       >
         &#10094;

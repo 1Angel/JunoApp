@@ -30,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >
-        <nav className=" top-0 z-50 bg-white shadow-sm">
+        <nav className="sticky top-0 z-50 bg-white shadow-sm">
           <NavBar />
         </nav>
         <AuthProvider>

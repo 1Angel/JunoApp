@@ -1,18 +1,8 @@
-import ImagesCarousel from "@/components/ImagesCorousel";
-import { EmblaOptionsType } from 'embla-carousel'
+
 import '../../styles/carousel.css';
 
-const OPTIONS: EmblaOptionsType = {}
-const SLIDE_COUNT = 10
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys())
 
 
-const images = [
-    {
-        image: "https://picsum.photos/id/1018/1000/600/"
-        
-    }
-]
 
 export default function page(){
     return <>
@@ -28,7 +18,7 @@ export default function page(){
             </div>
         </div>
         <div className="relative w-full max-w-3xl mx-auto h-[400px]">
-            <ImagesCarousel slides={SLIDES} options={OPTIONS}/>
-        </div>
+            
+                    </div>
     </>
 }
