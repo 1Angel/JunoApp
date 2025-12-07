@@ -19,6 +19,8 @@ namespace JunoBE.Features.Properties.Dtos
         public string homeType { get; set; }
         public int square_meters { get; set; }
         public UserDto user { get; set; }
+        public bool isBookmarkedByUser {get;set;}
+        public bool isCreatedByUser {get;set;}
         public List<PropertiesImageDto> images { get; set; }
         public DateTime createdAt { get; set; }
     }

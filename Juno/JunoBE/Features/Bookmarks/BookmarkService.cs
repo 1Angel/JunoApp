@@ -31,8 +31,9 @@ namespace JunoBE.Features.Bookmarks
             var properties = await query.Where(x => x.bookmark.Any(a => a.UserEntityId == userId))
             .Include(x => x.user)
             .Include(x => x.address)
+            .Include(x=>x.bookmark)
             .Include(x => x.propertiesImage)
-            .Select(x => _propertiesMapper.ToDto(x))
+            .Select(x => _propertiesMapper.ToDto(x, userId))
             .ToListAsync();
 
             return new PaginationResponse<List<PropertiesDto>>(pagination.pageNumber, pagination.pageSize, totalProperties, properties);

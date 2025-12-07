@@ -42,7 +42,7 @@ namespace JunoBE.Features.Properties
             };
         }
 
-        public PropertiesDto ToDto(PropertyEntity property)
+        public PropertiesDto ToDto(PropertyEntity property, string userId)
         {
             return new PropertiesDto
             {
@@ -58,6 +58,8 @@ namespace JunoBE.Features.Properties
                 homeType = property.homeType.ToString(),
                 square_meters = property.square_meters,
                 user = userMapper.ToDto(property.user),
+                isBookmarkedByUser = property.bookmark.Any(u=>u.UserEntityId == userId),
+                isCreatedByUser = property.UserEntityId.Equals(userId),
                 images = propertyImageMapper.ToDto(property.propertiesImage),
                 createdAt = property.createdAt
             };

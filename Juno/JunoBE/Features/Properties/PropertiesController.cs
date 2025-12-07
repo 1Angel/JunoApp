@@ -22,13 +22,13 @@ namespace JunoBE.Features.Properties
         [HttpGet]
         public async Task<ActionResult> Get([FromQuery] PaginationRequest paginationRequest)
         {
-            return Ok(await _service.GET(paginationRequest));
+            return Ok(await _service.GET(paginationRequest, _currentUser.getUserId()));
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<PropertiesDto>> GetbyId([FromRoute] int id)
         {
-            var property = await _service.GetPropertyByIdAsync(id);
+            var property = await _service.GetPropertyByIdAsync(id, _currentUser.getUserId());
             if (property == null)
             {
                 return NotFound();
