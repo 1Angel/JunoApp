@@ -78,6 +78,14 @@ builder.Services.AddCors(options =>
         .AllowCredentials()
         .AllowAnyMethod();
     });
+
+        options.AddPolicy("angularFE", config =>
+    {
+        config.AllowAnyHeader()
+        .WithOrigins("http://localhost:4200")
+        .AllowCredentials()
+        .AllowAnyMethod();
+    });
 });
 
 //services
@@ -112,7 +120,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseCors("nextFE");
+app.UseCors("angularFE");
 
 app.UseHttpsRedirection();
 

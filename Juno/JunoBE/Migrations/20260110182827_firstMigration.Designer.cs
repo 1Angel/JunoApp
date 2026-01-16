@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JunoBE.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251112232201_firstMigration")]
+    [Migration("20260110182827_firstMigration")]
     partial class firstMigration
     {
         /// <inheritdoc />

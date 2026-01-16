@@ -26,12 +26,12 @@ namespace JunoBE.Features.Bookmarks
             var totalProperties = await _context.bookmarks.Where(x => x.UserEntityId == userId).CountAsync();
             var query = _context.properties.AsQueryable();
 
-            query = query.Skip((pagination.pageNumber - 1) * pagination.pageSize);
+            query = query.Skip((pagination.pageNumber - 1) * pagination.pageSize).Take(pagination.pageSize);
 
             var properties = await query.Where(x => x.bookmark.Any(a => a.UserEntityId == userId))
             .Include(x => x.user)
             .Include(x => x.address)
-            .Include(x=>x.bookmark)
+            .Include(x => x.bookmark)
             .Include(x => x.propertiesImage)
             .Select(x => _propertiesMapper.ToDto(x, userId))
             .ToListAsync();
@@ -55,6 +55,27 @@ namespace JunoBE.Features.Bookmarks
         {
             var bookmark = await _context.bookmarks.Where(x => x.PropertyEntityId == propertyId && x.UserEntityId == userId).FirstAsync();
             if (bookmark != null)
+            {
+                _context.bookmarks.Remove(bookmark);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task toggleBookmark(int propertyId, string userid)
+        {
+            var bookmark = await _context.bookmarks.Where(x => x.PropertyEntityId == propertyId && x.UserEntityId == userid).FirstOrDefaultAsync();
+            if (bookmark == null)
+            {
+                BookmarkEntity newBookmark = new BookmarkEntity
+                {
+                    PropertyEntityId = propertyId,
+                    UserEntityId = userid
+                };
+
+                await _context.bookmarks.AddAsync(newBookmark);
+                await _context.SaveChangesAsync();
+            }
+            else
             {
                 _context.bookmarks.Remove(bookmark);
                 await _context.SaveChangesAsync();

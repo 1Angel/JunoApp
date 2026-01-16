@@ -1,0 +1,28 @@
+<div>
+    <div>
+        <!-- <p>fix this tomorrow</p> -->
+        <div class="flex items-center">
+            <img class="size-44 rounded-full"
+            src='https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'
+            />
+            <h1 class="text-4xl font-bold">{{user().first_name | titlecase}} {{user().last_name | titlecase}}</h1>
+            <p>{{user().email}}</p>
+        </div>
+    </div>
+    <div class="mt-4">
+        <a routerLink="/auth/properties" class="underline text-red-500 mb-4">View all properties</a>
+        <div class="grid grid-col-1 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-2">
+            @for (i of properties(); track i.id) {
+            <app-property-card [property]="i" />
+            }
+        </div>
+    </div>
+        <div class="mt-4">
+        <a routerLink="/auth/bookmarks" class="underline text-red-500 mb-4">View all Bookmarks</a>
+        <div class="grid grid-col-1 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-2">
+            @for (i of bookmarks(); track i.id) {
+            <app-property-card [property]="i" />
+            }
+        </div>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using JunoBE.Common;
 using JunoBE.Common.Authorization;
 using JunoBE.Features.Properties.Dtos;
@@ -42,6 +43,13 @@ namespace JunoBE.Features.Properties
         {
             await _service.Create(createPropertyDto, _currentUser.getUserId());
             return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<ActionResult> GetPropertiesCreatedByUser([FromQuery] PaginationRequest paginationRequest)
+        {
+            return Ok(await _service.getPropertiesCreatedByUser(paginationRequest, _currentUser.getUserId()));
         }
     }
 }

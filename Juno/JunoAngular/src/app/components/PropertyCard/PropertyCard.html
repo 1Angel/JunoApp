@@ -1,0 +1,91 @@
+<div class="group rounded-lg overflow-hidden shadow-2xl hover:shadow-xl transition-shadow duration-300 bg-card">
+    <div class="relative overflow-hidden h-64 bg-muted">
+        <app-carousel [images]="property().images"/>
+        <button (click)="setBookmark(property().id)" aria-label="heartIcon"
+            class="cursor-pointer absolute top-3 right-3 p-1 bg-white rounded-full shadow-md hover:bg-muted transition-colors">
+            @if(property().isBookmarkedByUser){
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="red"
+                stroke="red" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-heart-icon lucide-heart">
+                <path
+                    d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+            </svg>
+            }@else{
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-heart-icon lucide-heart">
+                <path
+                    d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+            </svg>
+            }
+        </button>
+        @if(property().isCreatedByUser){
+        <button aria-label="userEdit"
+            class="cursor-pointer absolute top-13 right-3 p-1 bg-white rounded-full shadow-md hover:bg-muted transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-pencil-icon lucide-pencil">
+                <path
+                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                <path d="m15 5 4 4" />
+            </svg>
+
+        </button>
+        }
+        <!-- {data.homeStatus == "FOR_SALE" ? <div
+            class="absolute top-3 left-3 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
+            En Venta
+        </div> : <div
+            class="absolute top-3 left-3 bg-red-700 text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">
+            En Renta
+        </div>} -->
+        @if(property().homeStatus == "FOR_SALE"){
+        <div class="absolute top-3 left-3 bg-black text-white  px-3 py-1 rounded-full text-sm font-semibold">
+            En Venta
+        </div>
+        }@else {
+        <div class="absolute top-3 left-3 bg-red-700 text-white px-3 py-1 rounded-full text-sm font-semibold">
+            En Renta
+        </div>
+        }
+
+    </div>
+
+    <div class="p-5">
+        <div class="mb-3">
+            <div class="text-2xl font-bold text-primary mb-1">DOP {{property().price | currency: 'USD'}}</div>
+            <div class="flex items-start gap-1">
+                <lucide-icon [name]="pinIcon" class="w-4 h-4 text-muted-foreground shrink-0 mt-2" />
+                <div>
+                    <div class="font-semibold text-foreground">{{property().address.street}}</div>
+                    <div class="text-sm text-muted-foreground">{{property().address.city}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex gap-4 py-4 border-t border-b border-border mb-4">
+            <div class="flex items-center gap-1 text-sm text-muted-foreground">
+                <lucide-icon [name]="bedIcon" class="w-4 h-4" />
+                <span>{{property().bedrooms}} beds</span>
+            </div>
+            <div class="flex items-center gap-1 text-sm text-muted-foreground">
+                <lucide-icon [name]="bathIcon" class="w-4 h-4" />
+                <span>{{property().bathrooms}} baths</span>
+            </div>
+            <div class="flex items-center gap-1 text-sm text-muted-foreground">
+                <lucide-icon [name]="rulerIcon" class="w-4 h-4" />
+                <span>{{property().square_meters}} sqft</span>
+            </div>
+        </div>
+
+        <div class="flex">
+            <a [routerLink]="['/home-details/', property().id]" class="w-full sm:w-auto sm:flex-1 text-center
+               bg-red-500 hover:bg-red-600
+               text-white font-bold text-sm
+               py-2 px-4 rounded">
+                More Info
+            </a>
+        </div>
+
+    </div>
+</div>

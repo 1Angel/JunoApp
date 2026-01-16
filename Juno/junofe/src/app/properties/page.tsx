@@ -46,6 +46,10 @@ export default async function Page({ searchParams }: Props) {
     ssr: !!false
   });
 
+  const holapadre = () => {
+    console.log('desde el padre')
+  }
+
   return (
     // <div>
     //   <div className="py-3 px-4 border-b-1 border-black bg-white shadow-2xl">
@@ -122,11 +126,11 @@ export default async function Page({ searchParams }: Props) {
           ))}
         </div>
         <div className="py-4">
-          <PaginationWithLinks 
-          page={currentPage} 
-          totalCount={posts.totalCount} 
-          pageSize={posts.pageSize} 
-          navigationMode="router" />
+          <PaginationWithLinks
+            page={currentPage}
+            totalCount={posts.totalCount}
+            pageSize={posts.pageSize}
+            navigationMode="router" />
 
         </div>
       </div>

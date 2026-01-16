@@ -1,0 +1,186 @@
+<div class="min-h-screen bg-white">
+    <div class="top-16 z-30 bg-white border-b border-gray-100 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <!-- <MapPin class="w-5 h-5 text-gray-600" /> -->
+                <span class="text-sm font-medium text-gray-600">{{property().address?.city}}</span>
+            </div>
+            <div class="flex items-center gap-4">
+        <button (click)="toggleBookmark(property().id)" aria-label="heartIcon"
+            class="cursor-pointer top-6 right-3 p-2 bg-white rounded-full shadow-md hover:bg-muted transition-colors hover:bg-gray-200">
+            @if(property().isBookmarkedByUser){
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="red"
+                stroke="red" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-heart-icon lucide-heart">
+                <path
+                    d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+            </svg>
+            }@else{
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-heart-icon lucide-heart">
+                <path
+                    d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
+            </svg>
+            }
+        </button>
+                <button aria-label="Copy to clipboard" class="cursor-pointer top-6 right-3 p-2 bg-white rounded-full shadow-md hover:bg-muted transition-colors hover:bg-gray-200" (click)="copyLink()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link-icon lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <div class="lg:col-span-2">
+
+                <div class="mb-6 w-full relative">
+                    <app-carousel [images]="property().images"/>
+                </div>
+
+                <div class="border-b border-gray-200 mb-8">
+                    <!-- {/* <div class="flex gap-8">
+                                {["overview", "features", "location"].map((tab) => (
+                                    <button
+                                        key={tab}
+                                        onClick={() => setActiveTab(tab)}
+                                        class={`pb-4 px-2 font-medium capitalize transition-colors ${activeTab === tab ? "text-black border-b-2 border-black" : "text-gray-600 hover:text-black"
+                                            }`}
+                                    >
+                                        {tab}
+                                    </button>
+                                ))}
+                            </div> */} -->
+                </div>
+
+                <div class="space-y-6">
+                    <div>
+                        <h2 class="text-2xl font-bold mb-3">About this property</h2>
+                        <p class="text-gray-600 leading-relaxed whitespace-pre-line">{{property().description}}</p>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center gap-2 mb-2">
+                                <lucide-angular [name]="bedIcon" />
+                                <span class="text-sm text-gray-600">Bedrooms</span>
+                            </div>
+                            <p class="text-2xl font-bold">{{property().bedrooms}}</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center gap-2 mb-2">
+                                <lucide-angular [name]="bathIcon" />
+                                <span class="text-sm text-gray-600">Bathrooms</span>
+                            </div>
+                            <p class="text-2xl font-bold">{{property().bathrooms}}</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center gap-2 mb-2">
+                                <lucide-angular [name]="ruler" />
+                                <span class="text-sm text-gray-600">Area</span>
+                            </div>
+                            <p class="text-2xl font-bold">{{property().square_meters}} m²</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- {/* {activeTab === "overview" && (
+                            <div>
+                                <h2 class="text-2xl font-bold mb-6">Key Features</h2>
+                                <div class="grid grid-cols-2 gap-4">
+                                    {property.features.map((feature, idx) => (
+                                        <div key={idx} class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                            <div class="w-2 h-2 bg-blue-500 rounded-full" />
+                                            <span class="font-medium text-gray-700">{feature}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )} */} -->
+
+                <div>
+                    <h2 class="text-2xl font-bold">Location</h2>
+                    <div class="aspect-video rounded-lg flex items-center justify-center">
+                        <div class="w-200 h-100 text-gray-400">
+                            <app-map
+                                [price]="property().price" 
+                                [latitude]="property().latitude" 
+                                [longitude]="property().longitude" 
+                                [mapZoom]="15"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="lg:col-span-1">
+
+                <div class="sticky top-40 space-y-4">
+                    <div class="bg-linear-to-br from-red-50 to-red-100 p-6 rounded-xl border border-red-200">
+                        <p class="text-sm text-gray-600 mb-2">Price</p>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4">
+                            RD {{property().price | currency: 'USD'}}
+                        </h3>
+                        <button
+                            class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg transition-colors mb-3">
+                            Schedule Tour
+                        </button>
+                        <button
+                            class="w-full border border-red-600 text-red-600 hover:bg-blue-50 font-semibold py-3 rounded-lg transition-colors">
+                            Contact Agent
+                        </button>
+                    </div>
+
+
+                    <div class="bg-white border border-gray-200 p-6 rounded-xl">
+                        <p class="text-xs uppercase tracking-wide text-gray-500 mb-4">Listing Agent</p>
+
+                        <div class="flex items-center gap-4 mb-6">
+                            <!-- <div class="relative w-16 h-16 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+                                        <img
+                                            src={property.user.image || "/placeholder.svg"}
+                                            alt={property.user.first_name}
+                                            class="w-full h-full object-cover"
+                                        />
+                                    </div> -->
+                            <div>
+                                <h4 class="font-bold text-gray-900">{{property().user.first_name | titlecase}}
+                                    {{property().user.last_name | titlecase}} </h4>
+                                <p class="text-sm text-gray-600">Real Estate Expert</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <button
+                                class="w-full flex items-center justify-center gap-2 p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors font-medium text-gray-700">
+                                <!-- <Phone class="w-4 h-4" /> -->
+                                Call Agent
+                            </button>
+                            <button
+                                class="w-full flex items-center justify-center gap-2 p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors font-medium text-gray-700">
+                                <!-- <MessageSquare class="w-4 h-4" /> -->
+                                Send Message
+                            </button>
+                        </div>
+
+                        <div class="mt-4 pt-4 border-t border-gray-200 space-y-2 text-sm">
+                            <p class="text-gray-600">Licensed Agent in Dominican Republic</p>
+                            <p class="text-gray-500">Available 9 AM - 6 PM EST</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if(isMobile()){
+
+    <p>Hola jijji</p>
+}@else {
+    <p>no estas en movil</p>
+}

@@ -1,0 +1,11 @@
+<div>
+    <input 
+    class="border rounded p-1"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [disabled]="disabled()"
+    [readOnly]="readonly()"
+    [value]="value()" 
+    (input)="value.set($event.target.value)"
+/>
+</div>

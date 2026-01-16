@@ -1,0 +1,24 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+
+    @if(bookmarksResource.hasValue()){
+    <h1 class="text-3xl font-bold mb-4">Your bookmarks</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        @for (data of bookmarksResource.value()!.results; track data.id) {
+        <app-property-card [property]="data" (bookmark)="toggleBookmarks($event)"/>
+        } @empty {
+        <span class="text-red-500">No data :(</span>
+        }
+    </div>
+    <div class="py-4">
+
+        <!-- pagination here -->
+        <app-pagination 
+            [total]="bookmarksResource.value()!.totalCount" 
+            [pageSize]="bookmarksResource.value()!.pageSize"
+            [currentPage]="bookmarksResource.value()!.pageNumber" />
+    </div>
+    }@else {
+    <p>No bookmarks</p>
+    }
+
+</div>

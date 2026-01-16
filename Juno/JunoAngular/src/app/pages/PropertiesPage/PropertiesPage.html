@@ -1,0 +1,34 @@
+<section class="py-2 sm:py-4 bg-background">
+
+    <div class="px-30">
+        <app-home-status-filter (homeStatus)="updateHomeStatusParam($event)"/>
+    </div>
+    <!-- search bar here -->
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @for (data of propertiesResource.value()?.results; track data.id) {
+            <app-property-card [property]="data"  (bookmark)="bookmarkProperty($event)"/>
+            } @empty {
+            <span class="text-red-500">No data :(</span>
+            }
+        </div>
+        <div class="py-4">
+
+            <!-- pagination here -->
+            <app-pagination 
+                (activePage)="updatePageParam($event)"
+                [total]="propertiesResource.value()!.totalCount"
+                [pageSize]="propertiesResource.value()!.pageSize"
+                [currentPage]="propertiesResource.value()!.pageNumber" />
+        </div>
+    </div>
+    <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <app-property-card-skeleton />
+        </div>
+    </div> -->
+    
+</section>

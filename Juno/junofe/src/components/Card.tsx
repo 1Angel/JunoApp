@@ -7,9 +7,10 @@ import { useRouter } from "next/navigation";
 import { Bath, Bed, Heart, MapPin, Ruler } from "lucide-react";
 import { Button } from "./ui/button";
 import { useCurrency } from "@/hooks/useCurrency";
+import { ReactEventHandler, useState } from "react";
 
 interface Props {
-    data: Properties
+    data: Properties,
 }
 
 const RDCurrency = Intl.NumberFormat("en-US", {
@@ -20,6 +21,19 @@ const RDCurrency = Intl.NumberFormat("en-US", {
 export default function HouseCard({ data }: Props) {
     const router = useRouter();
     const currency = useCurrency(data.price);
+
+
+    const [favorite, setFavorite] = useState(false);
+
+    const toggleBookmark = ()=>{
+        console.log('jiji hola desde el hijo');
+        if(favorite == false){
+            setFavorite(true)
+        }else{
+            setFavorite(false)
+        }
+    }
+    
     return (
         // <div className="max-w-sm rounded overflow-hidden shadow-lg">
         //     <img className="w-full" src="https://tse3.mm.bing.net/th/id/OIP.5kGyoxY2XZDixSK0JrZLjQHaFE?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Sunset in the mountains" />
@@ -63,7 +77,7 @@ export default function HouseCard({ data }: Props) {
         <div className="group rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 bg-card border border-border">
             <div className="relative overflow-hidden h-64 bg-muted">
                 <Carousel images={data.images} />
-                <button className="absolute top-15 right-3 p-2 bg-white rounded-full shadow-md hover:bg-muted transition-colors">
+                <button onClick={toggleBookmark} className="absolute top-15 right-3 p-2 bg-white rounded-full shadow-md hover:bg-muted transition-colors">
                     <Heart className="w-5 h-5 text-primary" />
                 </button>
                 {data.homeStatus == "FOR_SALE" ? <div className="absolute top-3 left-3 bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-semibold">

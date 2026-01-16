@@ -36,6 +36,7 @@ namespace JunoBE.Features.Properties
             .Where(x => x.Id == propertyId)
             .Include(x=>x.address)
             .Include(x=>x.user)
+            .Include(x=>x.bookmark)
             .Include(x=>x.propertiesImage)
             .Select(x => _propertiesMapper.ToDto(x, userId))
             .FirstOrDefaultAsync();
@@ -86,6 +87,27 @@ namespace JunoBE.Features.Properties
             .ToListAsync();
 
             return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, totalData, properties);
+        }
+
+        public async Task<PaginationResponse<List<PropertiesDto>>> getPropertiesCreatedByUser(PaginationRequest paginationRequest, string userId)
+        {
+            var query = _context.properties.AsQueryable();
+
+            var totalCount = await query.CountAsync();
+
+
+            query = query.Skip((paginationRequest.pageNumber - 1) * paginationRequest.pageSize).Take(paginationRequest.pageSize);
+
+            var properties = await query
+            .Where(x=>x.UserEntityId == userId)
+            .Include(x=> x.bookmark)
+            .Include(x=>x.address)
+            .Include(x=>x.user)
+            .Include(x=>x.propertiesImage)
+            .Select(x=> _propertiesMapper.ToDto(x, userId))
+            .ToListAsync();
+
+            return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, totalCount, properties);
         }
 
     }

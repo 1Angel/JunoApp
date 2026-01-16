@@ -42,5 +42,12 @@ namespace JunoBE.Features.Bookmarks
             await _bookmarkService.Delete(propertyId, _currentUser.getUserId());
             return Ok();
         }
+
+        [HttpPost("properties/{propertId}/toggle-bookmark")]
+        public async Task<ActionResult> toggleBookmark([FromRoute] int propertId)
+        {
+            await _bookmarkService.toggleBookmark(propertId, _currentUser.getUserId());
+            return Ok();
+        }
     }
 }
