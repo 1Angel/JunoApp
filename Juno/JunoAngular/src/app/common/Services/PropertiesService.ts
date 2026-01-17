@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 
@@ -11,13 +11,19 @@ export class PropertiesService {
 
   private apiUrl = environment.apiUrl;
 
-  getProperties(homestatus: string, pageNumber: number | undefined, pageSize: number){
+  getProperties(homestatus: string, pageNumber: number, pageSize: number, searchTerm: string |null| undefined){
+    let params = new HttpParams;
+    if(searchTerm){
+      params = params.set('search', searchTerm);
+    }
+    params = params.set('pageNumber', pageNumber);
+    params = params.set('pageSize', pageSize);
+    params = params.set('homestatus', homestatus);
+
     return this.http.get<PropertiesResponse>(`${this.apiUrl}/properties`, {
-      params: {
-        homestatus: homestatus,
-        pageNumber: pageNumber!,
-        pageSize: pageSize
-    }});
+      params: params
+    });
+    
   }
 
   getPropertiesByUser(pageNumber: number, pageSize: number){

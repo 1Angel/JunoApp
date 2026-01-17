@@ -1,7 +1,7 @@
-<section class="py-2 sm:py-4 bg-background">
+<section>
 
-    <div class="px-30">
-        <app-home-status-filter (homeStatus)="updateHomeStatusParam($event)"/>
+    <div class="sticky top-16 z-30 border-b border-gray-200 w-full">
+        <app-search-bar (direction)="updateSearchLocationParams($event)" (homeStatus)="updateHomeStatusParam($event)"/>
     </div>
     <!-- search bar here -->
 

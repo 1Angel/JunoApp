@@ -62,12 +62,6 @@ export class NavBar {
 
   // }
 
-  constructor(){
-    effect(()=> {
-      console.log(`${this.isProfileOpen()} esta cambiando`)
-    })
-  }
-
   Logout(){
     this.authService.Logout().subscribe({
       next: ()=> {

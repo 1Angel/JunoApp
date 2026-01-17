@@ -7,12 +7,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from "../../components/Pagination/Pagination";
 import { map } from 'rxjs';
 import { PropertyCardSkeleton } from '../../components/PropertyCardSkeleton/PropertyCardSkeleton';
-import { HomeStatusFilter } from '../../components/HomeStatusFilter/HomeStatusFilter';
 import { BookmarkService } from '../../common/Services/BookmarkService';
+import { SearchBar } from "../../components/SearchBar/SearchBar";
 
 @Component({
   selector: 'app-properties-page',
-  imports: [PropertyCard, Pagination, PropertyCardSkeleton, HomeStatusFilter],
+  imports: [PropertyCard, Pagination, PropertyCardSkeleton, SearchBar],
   templateUrl: './PropertiesPage.html',
   styleUrl: './PropertiesPage.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,9 +46,15 @@ export class PropertiesPage implements OnInit {
   }
   );
 
-  propertiesResource = rxResource<PropertiesResponse, { page: number, homeStatus: string }>({
-    params: () => ({ page: this.currentPage(), homeStatus: this.homeStatus() }),
-    stream: ({ params }) => this.propertyService.getProperties(params.homeStatus, params.page, 9),
+  searchTerm = toSignal(
+    this.route.queryParamMap.pipe(
+      map((params)=> params.get('q'))
+    )
+  );
+
+  propertiesResource = rxResource<PropertiesResponse, { page: number, homeStatus: string, searchTerm: string | null | undefined}>({
+    params: () => ({ page: this.currentPage(), homeStatus: this.homeStatus(),  searchTerm: this.searchTerm() }),
+    stream: ({ params }) => this.propertyService.getProperties(params.homeStatus, params.page, 9, params.searchTerm),
   });
 
 
@@ -76,7 +82,18 @@ export class PropertiesPage implements OnInit {
       queryParams: {
         page: 1,
         homestatus: status
-      }
+      },
+      queryParamsHandling: "merge"
+    });
+  }
+
+  updateSearchLocationParams(value: string){
+    console.log(value);
+    this.router.navigate([],{
+      queryParams: {
+        q: value
+      },
+      queryParamsHandling: "merge"
     });
   }
 
