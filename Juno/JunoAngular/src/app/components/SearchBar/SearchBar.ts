@@ -11,6 +11,7 @@ import { form, FormField } from '@angular/forms/signals';
 export class SearchBar {
   selectType = signal<"FOR_RENT" | "FOR_SALE">('FOR_SALE');
 
+  //refactor this
   myForm = form(signal<string>(''));
   selectForm = form(this.selectType);
 
