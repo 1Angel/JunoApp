@@ -32,6 +32,7 @@ export class AuthService {
   }
 
   setAuthentication(user:User){
+    console.log('hola nena')
       this.User.set(user);
       this.isLoggedIn.set(true)
   }

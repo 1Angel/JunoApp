@@ -9,6 +9,7 @@ import { BookmarkService } from '../../common/Services/BookmarkService';
 import { Carousel } from "../../components/Carousel/Carousel";
 import { AuthService } from '../../common/Services/AuthService';
 import { DesignService } from '../../common/Services/DesignService';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home-details-page',
@@ -25,6 +26,7 @@ export class HomeDetailsPage implements OnInit{
     });
 
     this.getProperty();
+    this.setMetadata();
   }
 
   private readonly service = inject(PropertiesService);
@@ -33,6 +35,8 @@ export class HomeDetailsPage implements OnInit{
   private readonly designService = inject(DesignService);
   route = inject(ActivatedRoute);
   router = inject(Router);
+  title = inject(Title);
+  metadata =  inject(Meta);
 
   isMobile = computed(()=> this.designService.smallScreen());
   isAuthenticated = computed(()=> this.authService.isLoggedIn());
@@ -44,6 +48,7 @@ export class HomeDetailsPage implements OnInit{
   getProperty(){
     this.service.getProperty(Number(this.propertyId())).subscribe((res)=>{
       this.property.set(res);
+      this.title.setTitle(`${res.address.street}, ${res.address.city} - Juno!`);
     });
   }
   
@@ -64,10 +69,14 @@ export class HomeDetailsPage implements OnInit{
 
   } 
   
-
   effecto = effect(()=> {
     console.log(`esta cambiando ${this.isMobile()}`)
   })
+
+  setMetadata(){
+    this.metadata.addTag({name: "description", content: "Details of the house"});
+        this.metadata.addTag({name: "description", content: "Details of the house"});
+  }
 
   //icons
   bedIcon = BedIcon;

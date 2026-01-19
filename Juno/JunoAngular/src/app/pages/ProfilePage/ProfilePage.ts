@@ -5,6 +5,7 @@ import { AuthService } from '../../common/Services/AuthService';
 import { RouterLink } from "@angular/router";
 import { BookmarkService } from '../../common/Services/BookmarkService';
 import { TitleCasePipe } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile-page',
@@ -18,11 +19,14 @@ export class ProfilePage implements OnInit{
     this.getProperties();
     this.getUserProfile();
     this.getBookmarks();
+    this.setMetadata();
   }
 
   propertyService = inject(PropertiesService);
   userService = inject(AuthService);
   bookmarkService = inject(BookmarkService);
+  title = inject(Title);
+  meta = inject(Meta);
 
   properties = signal<Properties[]>([]);
   bookmarks = signal<Properties[]>([]);
@@ -47,9 +51,14 @@ export class ProfilePage implements OnInit{
 
   getUserProfile(){
     this.userService.CurrentUser().subscribe(res=>{
-      this.user.set(res)
+      this.user.set(res),
+      this.title.setTitle(`${res.first_name} ${res.last_name} - Juno!`);
     });
   }
 
+  setMetadata(){
+    this.meta.addTag({name: "description", content: "Welcome to your profile!"});
+    this.meta.addTag({name: "og:description", content: "Welcome to your profile!"});
+  }
 
  }

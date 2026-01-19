@@ -6,13 +6,12 @@ import { rxResource, takeUntilDestroyed, toSignal } from '@angular/core/rxjs-int
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from "../../components/Pagination/Pagination";
 import { map } from 'rxjs';
-import { PropertyCardSkeleton } from '../../components/PropertyCardSkeleton/PropertyCardSkeleton';
 import { BookmarkService } from '../../common/Services/BookmarkService';
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 
 @Component({
   selector: 'app-properties-page',
-  imports: [PropertyCard, Pagination, PropertyCardSkeleton, SearchBar],
+  imports: [PropertyCard, Pagination, SearchBar],
   templateUrl: './PropertiesPage.html',
   styleUrl: './PropertiesPage.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

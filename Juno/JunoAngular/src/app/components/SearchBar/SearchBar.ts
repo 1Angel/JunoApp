@@ -10,14 +10,13 @@ import { form, FormField } from '@angular/forms/signals';
 })
 export class SearchBar {
   selectType = signal<"FOR_RENT" | "FOR_SALE">('FOR_SALE');
-
+  
+  direction = output<string>();
+  homeStatus = output<string>();
+  
   //refactor this
   myForm = form(signal<string>(''));
   selectForm = form(this.selectType);
-
-  direction = output<string>();
-  homeStatus = output<string>();
-
   setStatusParam(status: string) {
     this.homeStatus.emit(this.selectType());
   }
@@ -25,8 +24,6 @@ export class SearchBar {
   setDirection() {
     this.direction.emit(this.myForm().value());
   }
-
-
 
   types = [
     {

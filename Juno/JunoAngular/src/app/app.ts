@@ -10,17 +10,17 @@ import { LucideAngularModule } from 'lucide-angular';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit{
-  ngOnInit(): void {
-    this.authService.CurrentUser().subscribe({
-      next: (res)=> {
-        this.authService.setAuthentication(res)
-      },
-      error: ()=> this.authService.deleteUserData()
-    });
-  }
+export class App{
+  // ngOnInit(): void {
+  //   this.authService.CurrentUser().subscribe({
+  //     next: (res)=> {
+  //       this.authService.setAuthentication(res)
+  //     },
+  //     error: ()=> this.authService.deleteUserData()
+  //   });
+  // }
 
-  authService = inject(AuthService);
+  // authService = inject(AuthService);
 
   protected readonly title = signal('JunoAngular');
 }
