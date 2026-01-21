@@ -44,7 +44,7 @@
         }
 
         @if(isMobile()){
-        <button (click)="openMobileMenu()" className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer">
+        <button (click)="openMobileMenu()" aria-label="menuIcons" className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer">
           @if(isMenuOpen()){
           <lucide-icon [name]="xIcon" class="w-5 h-5" />
           }@else{

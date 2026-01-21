@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { NavBar } from "./components/NavBar/NavBar";
 import { AuthService } from './common/Services/AuthService';
 import { LucideAngularModule } from 'lucide-angular';
+import { Footer } from "./components/Footer/Footer";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavBar, LucideAngularModule],
+  imports: [RouterOutlet, NavBar, LucideAngularModule, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

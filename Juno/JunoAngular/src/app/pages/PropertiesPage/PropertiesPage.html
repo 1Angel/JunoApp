@@ -1,9 +1,8 @@
+<!-- <div class="sticky top-16 z-30 border-b border-gray-200 w-full">
+    <app-search-bar (direction)="updateSearchLocationParams($event)" (homeStatus)="updateHomeStatusParam($event)"/>
+</div> -->
 <section>
 
-    <div class="sticky top-16 z-30 border-b border-gray-200 w-full">
-        <app-search-bar (direction)="updateSearchLocationParams($event)" (homeStatus)="updateHomeStatusParam($event)"/>
-    </div>
-    <!-- search bar here -->
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 
@@ -20,9 +19,9 @@
             <!-- pagination here -->
             <app-pagination 
                 (activePage)="updatePageParam($event)"
-                [total]="propertiesResource.value()!.totalCount"
-                [pageSize]="propertiesResource.value()!.pageSize"
-                [currentPage]="propertiesResource.value()!.pageNumber" />
+                [total]="propertiesResource.value()?.totalCount"
+                [pageSize]="propertiesResource.value()?.pageSize"
+                [currentPage]="propertiesResource.value()?.pageNumber" />
         </div>
     </div>
     <!-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

@@ -49,13 +49,13 @@ export class NavBar {
     this.isProfileOpen.update(()=> false);
   }
 
-  @HostListener('document:click', ['$event'])
-  onClickDocument(event: MouseEvent){
-    const element = this.userDropDown()?.nativeElement;
-    if(!element.contains(event.target)){
-      this.closeMenujiji();
-    }
-  }
+  // @HostListener('document:click', ['$event'])
+  // onClickDocument(event: MouseEvent){
+  //   const element = this.userDropDown()?.nativeElement;
+  //   if(!element.contains(event.target)){
+  //     this.closeMenujiji();
+  //   }
+  // }
 
   Logout() {
     this.authService.Logout().subscribe({
@@ -83,7 +83,7 @@ export class NavBar {
       title: "Buscar",
       querys: {
         page: '1',
-        homestatus: "FOR_RENT"
+        homestatus: "FOR_SALE"
       }
     },
     {

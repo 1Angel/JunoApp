@@ -1,1 +1,16 @@
-<p>AboutPage works!</p>
+<button
+  (click)="showDialog()"
+  class="rounded-2xl bg-red-500 px-4 py-2 text-white font-bold hover:bg-red-600 cursor-pointer"
+>
+  mostrar
+</button>
+
+<dialog class="bg-white px-20" #saludo>
+  <p>Hola nena, como te va!</p>
+  <button
+    (click)="closeDialog()"
+    class="rounded-2xl bg-red-500 px-4 py-2 text-white font-bold hover:bg-red-600 cursor-pointer"
+  >
+    mostrar
+  </button>
+</dialog>

@@ -10,13 +10,13 @@ import { RouterLink } from '@angular/router';
 })
 export class Pagination {
 
-  currentPage = input<number>(1);
-  pageSize = input.required<number>();
-  total = input.required<number>();
+  currentPage = input<number>();
+  pageSize = input<number>();
+  total = input<number>();
 
   activePage = output<number>();
 
-  totalPages = computed(() => Math.ceil(this.total() / this.pageSize()));
+  totalPages = computed(() => Math.ceil(this.total()! / this.pageSize()!));
 
   getPages = computed(() => {
     return Array.from({ length: this.totalPages() }, (_, i) => i + 1);

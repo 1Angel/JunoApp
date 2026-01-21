@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, resource, signal } from '@angular/core';
 import { BookmarkService } from '../../common/Services/BookmarkService';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { PropertyCard } from "../../components/PropertyCard/PropertyCard";
+import { PropertyCard } from '../../components/PropertyCard/PropertyCard';
 import { Pagination } from '../../components/Pagination/Pagination';
 
 @Component({
@@ -12,18 +12,16 @@ import { Pagination } from '../../components/Pagination/Pagination';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookmarksPage {
-
   bookmarkService = inject(BookmarkService);
 
   bookmarksResource = rxResource({
-    stream: ()=> this.bookmarkService.getUserBookmarks(1, 3)
+    stream: () => this.bookmarkService.getUserBookmarks(1, 3),
   });
 
-
-  toggleBookmarks(id: number){
+  toggleBookmarks(id: number) {
     this.bookmarkService.toggleBookmark(id).subscribe({
-      next: ()=> this.bookmarksResource.reload(),
-      error: (err)=>console.log(`${err}`)
-    })
+      next: () => this.bookmarksResource.reload(),
+      error: (err) => console.log(`${err}`),
+    });
   }
- }
+}

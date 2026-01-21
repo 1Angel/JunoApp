@@ -45,7 +45,7 @@ export class LoginPage {
           console.log(err)
           this.errorMessage.set(err.error.message)
         }
-      })
+      });
     }
   }
 

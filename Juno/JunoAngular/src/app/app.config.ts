@@ -13,7 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(()=> {
       const service = inject(AuthService);
       service.CurrentUser().subscribe((res)=>{
-        console.log('iniciando');
         service.setAuthentication(res)
       });
     }),

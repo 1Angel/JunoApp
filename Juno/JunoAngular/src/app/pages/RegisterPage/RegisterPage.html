@@ -1,0 +1,66 @@
+<div class="flex justify-center items-center my-25">
+  <div class="max-w-sm shadow-2xl rounded w-full py-6 px-2">
+    <p class="font-bold flex justify-center items-center">Create a new account!</p>
+    <form (submit)="createUser($event)">
+      <div class="m-4 block">
+        <label>First Name</label>
+        <input class="rounded border w-full p-1" type="text" [formField]="registerForm.first_name"/>
+        @if(registerForm.first_name().touched() && registerForm.first_name().invalid()){
+          @for (err of registerForm.first_name().errors(); track err.message) {
+            <span class="text-red-500">{{err.message}}</span>
+          }
+
+        }
+      </div>
+      <div class="m-4 block">
+        <label>Last Name</label>
+        <input class="border rounded w-full p-1" type="text"[formField]="registerForm.last_name" />
+        @if (registerForm.last_name().touched() && registerForm.last_name().invalid()) {
+          @for (err of registerForm.last_name().errors(); track err.message) {
+            <span class="text-red-500">{{err.message}}</span>
+          }
+        }
+      </div>
+      <div class="m-4 block">
+        <label>Email</label>
+        <input class="border rounded w-full p-1" type="email" [formField]="registerForm.email" />
+        @if (registerForm.email().touched() && registerForm.email().invalid()) {
+          @for (err of registerForm.email().errors(); track err.message) {
+            <span class="text-red-500">{{err.message}}</span>
+          }
+        }
+      </div>
+      <div class="m-4 block">
+        <label>Password</label>
+        <input class="border rounded p-1 w-full" type="password" [formField]="registerForm.password" />
+        @if(registerForm.password().touched() && registerForm.password().invalid()){
+          @for (err of registerForm.password().errors(); track err.message) {
+            <span class="text-red-500">
+              {{err.message}}
+            </span>
+          }
+        }
+      </div>
+      <div class="m-4 block">
+        <label>Phone Number</label>
+        <input class="border rounded w-full p-1" type="tel" [formField]="registerForm.phone_number" />
+        @if (registerForm.phone_number().touched() && registerForm.phone_number().invalid()) {
+          @for (err of registerForm.phone_number().errors(); track err.message) {
+            <span class="text-red-500">
+              {{err.message}}
+            </span>
+          }
+        }
+      </div>
+      <div class="flex m-4">
+        <button
+          type="submit"
+          [disabled]="registerForm().invalid()"
+          class="cursor-pointer rounded bg-red-500 w-full py-2 px-2 text-white font-bold disabled:bg-gray-600 disabled:cursor-not-allowed"
+        >
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
