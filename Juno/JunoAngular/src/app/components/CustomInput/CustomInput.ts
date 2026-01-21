@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input, InputSignal, InputSignalWith
 import { FormValueControl } from "@angular/forms/signals";
 import type { ValidationError, DisabledReason, WithOptionalField } from "@angular/forms/signals";
 
-export type InputType = | "text" | "email" | "password";
+export type InputType = | "text" | "email" | "password" | "tel";
 
 @Component({
   selector: 'app-custom-input',
@@ -22,8 +22,12 @@ export class CustomInput implements FormValueControl<string>{
   readonly invalid = input<boolean>(false);
   readonly hidden = input<boolean>(false);
   readonly readonly = input<boolean>(false);
-  readonly disableReason = input<readonly DisabledReason[]>([]);
+  readonly disabledReasons = input<readonly WithOptionalField<DisabledReason>[]>([]);
+  readonly errors = input<readonly WithOptionalField<ValidationError>[]>([])
 
+  minLength = input<number | undefined>(undefined);
+  maxLength = input<number | undefined>(undefined);
+  required = input<boolean>(false);
   
   //add errors
 }

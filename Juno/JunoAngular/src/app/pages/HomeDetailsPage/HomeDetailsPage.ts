@@ -18,10 +18,12 @@ import { Carousel } from '../../components/Carousel/Carousel';
 import { AuthService } from '../../common/Services/AuthService';
 import { DesignService } from '../../common/Services/DesignService';
 import { Meta, Title } from '@angular/platform-browser';
+import { ToastService } from '../../common/Services/ToastService';
+import { Toast } from '../../components/Toast/Toast';
 
 @Component({
   selector: 'app-home-details-page',
-  imports: [CurrencyPipe, LucideAngularModule, Map, TitleCasePipe, Carousel],
+  imports: [CurrencyPipe, LucideAngularModule, Map, TitleCasePipe, Carousel, Toast],
   templateUrl: './HomeDetailsPage.html',
   styleUrl: './HomeDetailsPage.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,6 +46,7 @@ export class HomeDetailsPage implements OnInit {
   router = inject(Router);
   title = inject(Title);
   metadata = inject(Meta);
+  private readonly toastService = inject(ToastService);
 
   isMobile = computed(() => this.designService.smallScreen());
   isAuthenticated = computed(() => this.authService.isLoggedIn());
@@ -62,7 +65,7 @@ export class HomeDetailsPage implements OnInit {
   toggleBookmark(id: number) {
     if (this.isAuthenticated()) {
       this.bookmarkService.toggleBookmark(id).subscribe({
-        next: () => this.getProperty(),
+        next: () => {this.getProperty(), this.toastService.show("Bookmarked")},
       });
     } else {
       this.router.navigateByUrl('/auth/login');

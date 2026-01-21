@@ -19,10 +19,7 @@ import { SearchBar } from "../../components/SearchBar/SearchBar";
 export class PropertiesPage implements OnInit {
 
   ngOnInit(): void {
-    this.setMetaData();
-
-    console.log('jiji');
-    
+    this.setMetaData();    
   }
 
   private readonly title = inject(Title);

@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { email, form, required, FormField, minLength } from '@angular/forms/signals';
+import { email, form, required, FormField, minLength, maxLength } from '@angular/forms/signals';
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../common/Services/AuthService';
+import { CustomInput } from '../../components/CustomInput/CustomInput';
 
 type LoginForm = {
   email: string;
@@ -10,7 +11,7 @@ type LoginForm = {
 
 @Component({
   selector: 'app-login-page',
-  imports: [FormField, RouterLink],
+  imports: [FormField, RouterLink, CustomInput],
   templateUrl: './LoginPage.html',
   styleUrl: './LoginPage.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,11 +29,12 @@ export class LoginPage {
   });
 
   loginForm = form(this.userModel, (path)=>{
-    required(path.email,{ message: "Email is required"}),
+    required(path.email,{ message: "Email is required, hola gente"}),
     email(path.email, {message: "Email is invalid"}),
 
     required(path.password, {message: "Password is required"}),
-    minLength(path.password, 5, {message: "Password should be more than 5 characters"})
+    minLength(path.password, 5, {message: "Password should be more than 5 characters"}),
+    maxLength(path.password, 10, {message: "Password is too long"})
   });
 
   LogIn(event: Event){

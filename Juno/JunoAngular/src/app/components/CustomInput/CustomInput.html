@@ -1,11 +1,31 @@
 <div>
-    <input 
-    class="border rounded p-1"
+  <input
+    class="border rounded w-full p-1"
     [type]="type()"
     [placeholder]="placeholder()"
     [disabled]="disabled()"
     [readOnly]="readonly()"
-    [value]="value()" 
+    [value]="value()"
     (input)="value.set($event.target.value)"
-/>
+    (blur)="touched.set(true)"
+  />
+  @if (touched() && invalid()) {
+    <div>
+      @for (i of errors(); track i.message) {
+        <span class="text-red-500">
+          {{ i.message }}
+        </span>
+      }
+    </div>
+  }
+
+  @if (disabled() && disabledReasons().length > 0) {
+    <div>
+      @for (i of errors(); track i.message) {
+        <span class="text-red-500">
+          {{ i.message }}
+        </span>
+      }
+    </div>
+  }
 </div>
