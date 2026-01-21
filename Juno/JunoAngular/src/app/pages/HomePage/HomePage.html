@@ -1,0 +1,20 @@
+        <section class="py-16 sm:py-24 bg-background">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-foreground mb-4">Featured Properties</h2>
+                    <p class="text-lg text-muted-foreground">Handpicked homes just for you</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @for (i of properties(); track i.id) {
+                        <app-property-card [property]="i"/>
+                    }
+                </div>
+
+                <div class="text-center mt-12">
+                    <a routerLink="/properties" [queryParams]="{homestatus: 'FOR_SALE'}" class="rounded bg-black text-white hover:bg-gray-900 px-8 py-2 h-auto text-base">
+                        Ver Todas las propiedades
+                    </a>
+                </div>
+            </div>
+        </section>
