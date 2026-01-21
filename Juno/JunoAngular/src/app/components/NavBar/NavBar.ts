@@ -45,17 +45,17 @@ export class NavBar {
     this.isMenuOpen() ? this.isMenuOpen.update(() => !!false) : this.isMenuOpen.update(() => !false);
   }
 
-  closeMenujiji(){
+  closeMenu(){
     this.isProfileOpen.update(()=> false);
   }
 
-  // @HostListener('document:click', ['$event'])
-  // onClickDocument(event: MouseEvent){
-  //   const element = this.userDropDown()?.nativeElement;
-  //   if(!element.contains(event.target)){
-  //     this.closeMenujiji();
-  //   }
-  // }
+  @HostListener('document:click', ['$event'])
+  onClickDocument(event: MouseEvent){
+    const element = this.userDropDown()?.nativeElement;
+    if(!element?.contains(event.target)){
+      this.closeMenu();
+    }
+  }
 
   Logout() {
     this.authService.Logout().subscribe({

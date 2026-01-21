@@ -23,8 +23,9 @@ namespace JunoBE.Features.Bookmarks
 
         public async Task<PaginationResponse<List<PropertiesDto>>> GetUserBookmarkedProperties(PaginationRequest pagination, string userId)
         {
-            var totalProperties = await _context.bookmarks.Where(x => x.UserEntityId == userId).CountAsync();
             var query = _context.properties.AsQueryable();
+
+            var totalCount = await query.Where(x=>x.bookmark.Any(x=>x.UserEntityId == userId)).CountAsync();
 
             query = query.Skip((pagination.pageNumber - 1) * pagination.pageSize).Take(pagination.pageSize);
 
@@ -36,7 +37,7 @@ namespace JunoBE.Features.Bookmarks
             .Select(x => _propertiesMapper.ToDto(x, userId))
             .ToListAsync();
 
-            return new PaginationResponse<List<PropertiesDto>>(pagination.pageNumber, pagination.pageSize, totalProperties, properties);
+            return new PaginationResponse<List<PropertiesDto>>(pagination.pageNumber, pagination.pageSize, totalCount, properties);
         }
 
         public async Task CreateBookmark(int propertyId, string userId)

@@ -15,7 +15,7 @@ export class BookmarksPage {
   bookmarkService = inject(BookmarkService);
 
   bookmarksResource = rxResource({
-    stream: () => this.bookmarkService.getUserBookmarks(1, 3),
+    stream: () => this.bookmarkService.getUserBookmarks(1, 50),
   });
 
   toggleBookmarks(id: number) {

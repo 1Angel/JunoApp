@@ -9,6 +9,12 @@ import { form, FormField } from '@angular/forms/signals';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchBar {
+
+  constructor(){
+    console.log('hola');
+    
+  }
+
   selectType = signal<"FOR_RENT" | "FOR_SALE">('FOR_SALE');
   
   direction = output<string>();

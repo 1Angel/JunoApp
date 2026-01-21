@@ -20,6 +20,9 @@ export class PropertiesPage implements OnInit {
 
   ngOnInit(): void {
     this.setMetaData();
+
+    console.log('jiji');
+    
   }
 
   private readonly title = inject(Title);

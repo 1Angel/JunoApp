@@ -23,6 +23,8 @@ export class RegisterPage {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
+  errorMessage = signal('');
+
   registerModel = signal<RegisterForm>({
     first_name: '',
     last_name: '',
@@ -52,7 +54,10 @@ export class RegisterPage {
 
     this.authService.Register(first_name, last_name, email, password, phone_number).subscribe({
       next: ()=> {
-        this.router.navigateByUrl('/properties');
+        this.router.navigateByUrl('/properties?page=1&homestatus=FOR_SALE');
+      },
+      error: (err)=> {
+        this.errorMessage.set(err.error.errors)
       }
     });
     console.log(this.registerModel());
