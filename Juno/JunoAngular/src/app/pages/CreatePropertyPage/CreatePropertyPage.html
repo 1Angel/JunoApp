@@ -1,53 +1,66 @@
-<div class="px-10 border rounded shadow-2xl">
-    <div>
-        <h1 class="font-bold text-2xl">Create a new Property</h1>
-        <form (submit)="Create($event)">
-            <div class="mt-4 block">
-                <label>Price</label>
-                <input type="number" class="rounded border p-1" [formField]="propertyForm.price"/>
-            </div>
-            <div class="mt-4 block">
-                <label for="">Bed Rooms</label>
-                <input type="number" class="border rounded p-1" />
-            </div>
-            <div class="mt-4 block">
-                <label for="">Bath Rooms</label>
-                <input type="number" class="border rounded p-1" />
-            </div>
-            <div class="mt-4 block">
-                <label>Description</label>
-                <app-custom-input placeholder="Enter the description" [formField]="propertyForm.description" />
-            </div>
-            <div class="mt-4 block">
-                <label>Home Status</label>
-                <select>
-                    <option value="FOR_RENT">For Rent</option>
-                    <option value="FOR_SALE">For Sale</option>
-                </select>
-            </div>
-            <div class="block mt-4">
-                <label>Provinces</label>
-                <select [formField]="propertyForm.province" >
-                    @for (i of provinciasRD; track i) {
-                    <option [value]="i">{{i}}</option>
-                    }
-                </select>
-            </div>
-            <div>
-                <label>City</label>
-                <app-custom-input [formField]="propertyForm.city" placeholder="Enter the city"/>
-            </div>
-            <div>
-                <label>Street</label>
-                <input/>
-            </div>
-            <div>
-                <label for="">Square Meters</label>
-                <input/>
-            </div>
-            <div>
-                <button type="submit">Create</button>
-            </div>
-        </form>
-    </div>
+<div class="px-10 border rounded shadow-2xl grid grid-cols-1 sm:grid-cols-2">
+  <div>
+    <h1 class="font-bold text-2xl">Create a new Property</h1>
+    <form (submit)="Create($event)">
+      <div class="mt-4 block">
+        <label>Price</label>
+        <input type="number" class="rounded border p-1" [formField]="propertyForm.price" />
+      </div>
+      <div class="mt-4 block">
+        <label for="">Bed Rooms</label>
+        <input type="number" class="border rounded p-1" />
+      </div>
+      <div class="mt-4 block">
+        <label for="">Bath Rooms</label>
+        <input type="number" class="border rounded p-1" />
+      </div>
+      <div class="mt-4 block">
+        <label>Description</label>
+        <app-custom-input
+          placeholder="Enter the description"
+          [formField]="propertyForm.description"
+        />
+      </div>
+      <div class="mt-4 block">
+        <label>Home Status</label>
+        <select>
+          <option value="FOR_RENT">For Rent</option>
+          <option value="FOR_SALE">For Sale</option>
+        </select>
+      </div>
+      <div class="block mt-4">
+        <label>Provinces</label>
+        <select [formField]="propertyForm.province">
+          @for (i of provinciasRD; track i) {
+            <option [value]="i">{{ i }}</option>
+          }
+        </select>
+      </div>
+      <div>
+        <label>City</label>
+        <app-custom-input [formField]="propertyForm.city" placeholder="Enter the city" />
+      </div>
+      <div>
+        <label>Street</label>
+        <input />
+      </div>
+      <div>
+        <label for="">Square Meters</label>
+        <input />
+      </div>
+      <div>
+        <button type="submit">Create</button>
+      </div>
+    </form>
+  </div>
+  <div class="ml-4">
+    <h1 class="text-2xl font-medium">Select the location of your property</h1>
+    <app-map
+      [latitude]="RDLatitude"
+      [longitude]="RDLongitude"
+      [isDraggable]="true"
+      [mapZoom]="10"
+      (emitLocation)="catchLocation($event)"
+    />
+  </div>
 </div>

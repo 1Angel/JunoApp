@@ -1,9 +1,6 @@
-
-
 <div class="sticky top-0 z-40 border-b border-gray-200 bg-white w-full">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
     <div class="flex items-center justify-between">
-
       <div class="flex items-center gap-2 shrink-0">
         <div class="w-8 h-8 bg-red-700 rounded-md flex items-center justify-center">
           <span class="text-white font-bold text-lg">J</span>
@@ -12,52 +9,71 @@
       </div>
 
       <nav class="hidden md:flex items-center gap-8">
-        @for(err of navLinks; track err.path){
-        <a [routerLink]="[err.path]" [queryParams]="{page: err.querys?.page, homestatus: err.querys?.homestatus}"
-          class="text-foreground font-medium hover:text-gray-600 transition-colors text-sm">
-          {{err.title}}
-        </a>
+        @for (err of navLinks; track err.path) {
+          <a
+            [routerLink]="[err.path]"
+            [queryParams]="{ page: err.querys?.page, homestatus: err.querys?.homestatus }"
+            class="text-foreground font-medium hover:text-gray-600 transition-colors text-sm"
+          >
+            {{ err.title }}
+          </a>
         }
       </nav>
 
       <div class="flex items-center gap-3">
-        @if(isAuthenticated()){
-        <div class="relative hidden sm:block" #profileContainer>
-          <button (click)="openProfileMenu()"
-            class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-colors">
-            <img
-              src='https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'
-              alt={user?.first_name} class="w-8 h-8 rounded-full border-2 border-gray-300" />
-          </button>
+        @if (isAuthenticated()) {
+          <a
+            routerLink="/property/create"
+            class="hidden sm:inline px-6 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors text-sm"
+          >
+            Create Property
+          </a>
+          <div class="relative hidden sm:block" #profileContainer>
+            <button
+              (click)="openProfileMenu()"
+              class="flex items-center gap-2 p-1 rounded-full hover:bg-gray-100 transition-colors"
+            >
+              <img
+                src="https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3"
+                alt="{user?.first_name}"
+                class="w-8 h-8 rounded-full border-2 border-gray-300"
+              />
+            </button>
 
-          @if(isProfileOpen()){
-          <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg border border-gray-200 shadow-lg z-50">
-            <ng-container *ngTemplateOutlet="userDrop" />
+            @if (isProfileOpen()) {
+              <div
+                class="absolute right-0 mt-2 w-48 bg-white rounded-lg border border-gray-200 shadow-lg z-50"
+              >
+                <ng-container *ngTemplateOutlet="userDrop" />
+              </div>
+            }
           </div>
-          }
-        </div>
         } @else {
-        <a routerLink="/auth/login"
-          class="hidden sm:inline px-6 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors text-sm">
-          Sign In
-        </a>
+          <a
+            routerLink="/auth/login"
+            class="hidden sm:inline px-6 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors text-sm"
+          >
+            Sign In
+          </a>
         }
 
-        @if(isMobile()){
-        <button (click)="openMobileMenu()" aria-label="menuIcons" className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer">
-          @if(isMenuOpen()){
-          <lucide-icon [name]="xIcon" class="w-5 h-5" />
-          }@else{
-          <lucide-icon [name]="menuIcon" class="w-5 h-5" />
-          }
-        </button>
+        @if (isMobile()) {
+          <button
+            (click)="openMobileMenu()"
+            aria-label="menuIcons"
+            className="md:hidden p-2 rounded-md hover:bg-gray-100 transition-colors cursor-pointer"
+          >
+            @if (isMenuOpen()) {
+              <lucide-icon [name]="xIcon" class="w-5 h-5" />
+            } @else {
+              <lucide-icon [name]="menuIcon" class="w-5 h-5" />
+            }
+          </button>
         }
-
       </div>
-
     </div>
-    @if(isMenuOpen()){
-    <ng-container *ngTemplateOutlet="mobileMenu" />
+    @if (isMenuOpen()) {
+      <ng-container *ngTemplateOutlet="mobileMenu" />
     }
   </div>
 </div>
@@ -66,44 +82,62 @@
   <div class="md:hidden mt-4 pb-4 border-t border-gray-200 pt-4">
     <nav class="flex flex-col gap-3">
       @for (i of navLinks; track i.path) {
-      <a [routerLink]="i.path" [queryParams]="{page: i.querys?.page, homestatus: i.querys?.homestatus}" class="text-foreground font-medium hover:text-gray-600 transition-colors px-2 py-1">
-        {{i.title}}
-      </a>
-
+        <a
+          [routerLink]="i.path"
+          [queryParams]="{ page: i.querys?.page, homestatus: i.querys?.homestatus }"
+          class="text-foreground font-medium hover:text-gray-600 transition-colors px-2 py-1"
+        >
+          {{ i.title }}
+        </a>
       }
 
-      @if(isAuthenticated()){
-      <div class="mt-3 pt-3 border-t border-gray-200">
-        <div class="flex items-center gap-3 px-2 py-2 mb-3">
-          <img
-            src='https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3'
-            alt={user?.first_name} class="w-8 h-8 rounded-full border-2 border-gray-300" />
-          <div>
-            <p class="font-medium text-foreground text-sm">{{user()?.first_name}} {{user()?.last_name}}</p>
-            <p class="text-gray-500 text-xs">{{user()?.email}}</p>
+      @if (isAuthenticated()) {
+        <div class="mt-3 pt-3 border-t border-gray-200">
+          <div class="flex items-center gap-3 px-2 py-2 mb-3">
+            <img
+              src="https://tse4.mm.bing.net/th/id/OIP.c0ZvaPCNF3ovbkxVQKL3pAHaEK?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3"
+              [alt]="user()?.first_name"
+              class="w-8 h-8 rounded-full border-2 border-gray-300"
+            />
+            <div>
+              <p class="font-medium text-foreground text-sm">
+                {{ user()?.first_name }} {{ user()?.last_name }}
+              </p>
+              <p class="text-gray-500 text-xs">{{ user()?.email }}</p>
+            </div>
           </div>
+          <a
+            routerLink="/auth/profile"
+            class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors"
+          >
+            My Profile
+          </a>
+          <a
+            href="#"
+            class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors"
+          >
+            My Properties
+          </a>
+          <a
+            href="#"
+            class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors"
+          >
+            Settings
+          </a>
+          <button
+            class="cursor-pointer w-full mt-2 px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center justify-start gap-2 transition-colors rounded-md"
+          >
+            <!-- <LogOut className="w-4 h-4" /> -->
+            Sign Out
+          </button>
         </div>
-        <a routerLink="/auth/profile"
-          class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors">
-          My Profile
-        </a>
-        <a href="#" class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors">
-          My Properties
-        </a>
-        <a href="#" class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 rounded-md transition-colors">
-          Settings
-        </a>
-        <button
-          class="cursor-pointer w-full mt-2 px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center justify-start gap-2 transition-colors rounded-md">
-          <!-- <LogOut className="w-4 h-4" /> -->
-          Sign Out
-        </button>
-      </div>
       } @else {
-      <a routerLink="/auth/login"
-        class="w-full px-4 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors mt-2">
-        Sign In
-      </a>
+        <a
+          routerLink="/auth/login"
+          class="w-full px-4 py-2 bg-red-700 text-white font-medium rounded-md hover:bg-red-800 transition-colors mt-2"
+        >
+          Sign In
+        </a>
       }
     </nav>
   </div>
@@ -111,11 +145,16 @@
 
 <ng-template #userDrop>
   <div class="px-4 py-3 border-b border-gray-200">
-    <p class="font-medium text-foreground text-sm">{{user()?.first_name}} {{user()?.last_name}}</p>
-    <p class="text-gray-500 text-xs">{{user()?.email}}</p>
+    <p class="font-medium text-foreground text-sm">
+      {{ user()?.first_name }} {{ user()?.last_name }}
+    </p>
+    <p class="text-gray-500 text-xs">{{ user()?.email }}</p>
   </div>
   <div class="py-2">
-    <a routerLink="/auth/profile" class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 transition-colors">
+    <a
+      routerLink="/auth/profile"
+      class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 transition-colors"
+    >
       My Profile
     </a>
     <a href="#" class="block px-4 py-2 text-foreground text-sm hover:bg-gray-50 transition-colors">
@@ -126,10 +165,11 @@
     </a>
   </div>
   <div class="border-t border-gray-200 py-2">
-    <button (click)="Logout()"
-      class="cursor-pointer w-full text-left px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center gap-2 transition-colors">
+    <button
+      (click)="Logout()"
+      class="cursor-pointer w-full text-left px-4 py-2 text-red-700 text-sm hover:bg-red-50 flex items-center gap-2 transition-colors"
+    >
       Sign Out
     </button>
   </div>
 </ng-template>
-

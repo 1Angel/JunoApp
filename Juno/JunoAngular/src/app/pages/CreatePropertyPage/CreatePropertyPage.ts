@@ -2,6 +2,8 @@ import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, signal } from '@angular/core';
 import { form, required, FormField, email } from '@angular/forms/signals';
 import { CustomInput } from '../../components/CustomInput/CustomInput';
+import { LatLng } from 'leaflet';
+import { Map } from "../../components/Map/Map";
 
 interface CreatePropertyForm {
   price: number,
@@ -23,14 +25,22 @@ interface provinces {
 }
 
 
+//18.7132581,-70.4786989,403809
+
+const LATITUDE = 18.7132581;
+const LONGITUDE = -70.4786989;
+
 @Component({
   selector: 'app-create-property-page',
-  imports: [JsonPipe, FormField, CustomInput],
+  imports: [JsonPipe, FormField, CustomInput, Map],
   templateUrl: './CreatePropertyPage.html',
   styleUrl: './CreatePropertyPage.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreatePropertyPage {
+
+  RDLatitude = LATITUDE;
+  RDLongitude = LONGITUDE;
 
   propertyModel = signal<CreatePropertyForm>({
     bedrooms: 1,
@@ -54,7 +64,11 @@ export class CreatePropertyPage {
 
   efecto = effect(()=> {
     console.log(`${this.propertyModel().city}`);
-  })
+  });
+
+  catchLocation(e: LatLng){
+    console.log(`Esta es lalocation desde el componente mapa ${e}`);
+  }
 
 
   Create(event: Event){
