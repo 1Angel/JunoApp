@@ -94,12 +94,6 @@ builder.Services.AddScoped<PropertyimageService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<BookmarkService>();
 
-//mappers
-builder.Services.AddSingleton<PropertiesMapper>();
-builder.Services.AddSingleton<AddressMapper>();
-builder.Services.AddSingleton<PropertyImageMapper>();
-builder.Services.AddSingleton<UserMapper>();
-
 //azure
 builder.Services.AddSingleton<IUploadService, UploadService>();
 builder.Services.AddSingleton(_ => new BlobServiceClient(builder.Configuration.GetConnectionString("azureConn")));

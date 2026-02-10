@@ -7,14 +7,11 @@ namespace JunoBE.Features.ProperyImage
     {
         private readonly AppDbContext _context;
         private readonly IUploadService uploadService;
-        private readonly PropertyImageMapper propertyImageMapper;
 
-        public PropertyimageService(AppDbContext context, IUploadService uploadService, PropertyImageMapper propertyImageMapper)
+        public PropertyimageService(AppDbContext context, IUploadService uploadService)
         {
             _context = context;
             this.uploadService = uploadService;
-            this.propertyImageMapper = propertyImageMapper;
-
         }
 
         public async Task UploadImages(int propertyId, List<IFormFile> images)
@@ -24,7 +21,7 @@ namespace JunoBE.Features.ProperyImage
                 using Stream stream = i.OpenReadStream();
 
                 var imageUrl = await uploadService.UploadAsync(stream, i.ContentType);
-                var image = propertyImageMapper.ToEntity(imageUrl, propertyId);
+                var image = PropertyImageMapper.ToEntity(imageUrl, propertyId);
                 await _context.propertiesImages.AddAsync(image);
             }
             await _context.SaveChangesAsync();

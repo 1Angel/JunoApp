@@ -10,20 +10,18 @@ namespace JunoBE.Features.Properties
     public class PropertiesService
     {
         private readonly AppDbContext _context;
-        private readonly PropertiesMapper _propertiesMapper;
 
         private readonly PropertyimageService propertyimageService;
 
-        public PropertiesService(AppDbContext context, PropertiesMapper propertiesMapper, PropertyimageService propertyimageService)
+        public PropertiesService(AppDbContext context, PropertyimageService propertyimageService)
         {
             _context = context;
-            _propertiesMapper = propertiesMapper;
             this.propertyimageService = propertyimageService;
         }
 
         public async Task Create(CreatePropertyDto createPropertyDto, string userId)
         {
-            var propertyEntity = _propertiesMapper.ToEntity(createPropertyDto, userId);
+            var propertyEntity = PropertiesMapper.ToEntity(createPropertyDto, userId);
             var result = await _context.properties.AddAsync(propertyEntity);
             await _context.SaveChangesAsync();
 
@@ -38,7 +36,7 @@ namespace JunoBE.Features.Properties
             .Include(x=>x.user)
             .Include(x=>x.bookmark)
             .Include(x=>x.propertiesImage)
-            .Select(x => _propertiesMapper.ToDto(x, userId))
+            .Select(x => PropertiesMapper.ToDto(x, userId))
             .FirstOrDefaultAsync();
         }
 
@@ -83,7 +81,7 @@ namespace JunoBE.Features.Properties
             .Include(x=>x.user)
             .Include(x=>x.bookmark)
             .Include(x => x.propertiesImage)
-            .Select(x => _propertiesMapper.ToDto(x, userId))
+            .Select(x => PropertiesMapper.ToDto(x, userId))
             .ToListAsync();
 
             return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, totalData, properties);
@@ -104,7 +102,7 @@ namespace JunoBE.Features.Properties
             .Include(x=>x.address)
             .Include(x=>x.user)
             .Include(x=>x.propertiesImage)
-            .Select(x=> _propertiesMapper.ToDto(x, userId))
+            .Select(x=> PropertiesMapper.ToDto(x, userId))
             .ToListAsync();
 
             return new PaginationResponse<List<PropertiesDto>>(paginationRequest.pageNumber, paginationRequest.pageSize, totalCount, properties);

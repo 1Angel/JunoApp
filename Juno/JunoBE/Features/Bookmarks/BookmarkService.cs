@@ -13,12 +13,10 @@ namespace JunoBE.Features.Bookmarks
     public class BookmarkService
     {
         private readonly AppDbContext _context;
-        private readonly PropertiesMapper _propertiesMapper;
 
-        public BookmarkService(AppDbContext context, PropertiesMapper propertiesMapper)
+        public BookmarkService(AppDbContext context)
         {
             _context = context;
-            _propertiesMapper = propertiesMapper;
         }
 
         public async Task<PaginationResponse<List<PropertiesDto>>> GetUserBookmarkedProperties(PaginationRequest pagination, string userId)
@@ -34,7 +32,7 @@ namespace JunoBE.Features.Bookmarks
             .Include(x => x.address)
             .Include(x => x.bookmark)
             .Include(x => x.propertiesImage)
-            .Select(x => _propertiesMapper.ToDto(x, userId))
+            .Select(x => PropertiesMapper.ToDto(x, userId))
             .ToListAsync();
 
             return new PaginationResponse<List<PropertiesDto>>(pagination.pageNumber, pagination.pageSize, totalCount, properties);

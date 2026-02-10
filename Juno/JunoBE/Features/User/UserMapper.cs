@@ -2,9 +2,9 @@ using JunoBE.Features.User.Dtos;
 
 namespace JunoBE.Features.User
 {
-    public class UserMapper
+    public static class UserMapper
     {
-        public UserEntity ToEntity(RegisterUserDto registerUserDto)
+        public static UserEntity ToEntity(RegisterUserDto registerUserDto)
         {
             return new UserEntity
             {
@@ -17,15 +17,9 @@ namespace JunoBE.Features.User
             };
         }
 
-        public UserDto ToDto(UserEntity user)
+        public static UserDto ToDto(UserEntity user)
         {
-            return new UserDto
-            {
-                Id = user.Id,
-                email = user.Email,
-                first_name = user.first_name,
-                last_name = user.last_name
-            };
+            return new UserDto(user.Id, user.first_name, user.last_name, user.Email);
         }
     }
 }

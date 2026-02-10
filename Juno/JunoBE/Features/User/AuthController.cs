@@ -16,14 +16,12 @@ namespace JunoBE.Features.User
     public class AuthController: ControllerBase
     {
         private readonly UserService _userService;
-        private readonly UserMapper userMapper;
         private readonly TokenService tokenService;
         private readonly CookieService cookieService;
         private readonly CurrentUser _currentUser;
-        public AuthController(UserService userService, UserMapper userMapper, TokenService tokenService, CookieService cookieService, CurrentUser currentUser)
+        public AuthController(UserService userService, TokenService tokenService, CookieService cookieService, CurrentUser currentUser)
         {
             _userService = userService;
-            this.userMapper = userMapper;
             this.tokenService = tokenService;
             this.cookieService = cookieService;
             _currentUser = currentUser;
@@ -46,7 +44,7 @@ namespace JunoBE.Features.User
                 return BadRequest(new {errors = "El usuario ya existe", error= HttpStatusCode.BadRequest});
             }
 
-            var newUser = userMapper.ToEntity(register);
+            var newUser = UserMapper.ToEntity(register);
             var create = await _userService.CreateUser(newUser, register.password);
 
             if (!create.Succeeded)

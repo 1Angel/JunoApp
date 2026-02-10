@@ -5,21 +5,10 @@ using JunoBE.Features.User;
 
 namespace JunoBE.Features.Properties
 {
-    public class PropertiesMapper
+    public static class PropertiesMapper
     {
-        private readonly AddressMapper _addressMapper;
-        private readonly PropertyImageMapper propertyImageMapper;
-        private readonly UserMapper userMapper;
 
-        public PropertiesMapper(AddressMapper addressMapper, PropertyImageMapper propertyImageMapper, UserMapper userMapper)
-        {
-            _addressMapper = addressMapper;
-            this.propertyImageMapper = propertyImageMapper;
-            this.userMapper = userMapper;
-        }
-
-
-        public PropertyEntity ToEntity(CreatePropertyDto createPropertyDto, string userId)
+        public static PropertyEntity ToEntity(CreatePropertyDto createPropertyDto, string userId)
         {
             return new PropertyEntity
             {
@@ -42,27 +31,27 @@ namespace JunoBE.Features.Properties
             };
         }
 
-        public PropertiesDto ToDto(PropertyEntity property, string userId)
+        public static PropertiesDto ToDto(PropertyEntity property, string userId)
         {
             return new PropertiesDto
-            {
-                Id = property.Id,
-                price = property.price,
-                bedrooms = property.bedrooms,
-                bathrooms = property.bathrooms,
-                description = property.description,
-                latitude = property.latitude,
-                longitude = property.longitude,
-                address = _addressMapper.ToAddressDto(property.address),
-                homeStatus = property.homeStatus.ToString(),
-                homeType = property.homeType.ToString(),
-                square_meters = property.square_meters,
-                user = userMapper.ToDto(property.user),
-                isBookmarkedByUser = property.bookmark.Any(u=>u.UserEntityId == userId),
-                isCreatedByUser = property.UserEntityId.Equals(userId),
-                images = propertyImageMapper.ToDto(property.propertiesImage),
-                createdAt = property.createdAt
-            };
+            (
+                 property.Id,
+                 property.price,
+                 property.bedrooms,
+                 property.bathrooms,
+                property.description,
+                 property.latitude,
+                  property.longitude,
+                 AddressMapper.ToAddressDto(property.address),
+                 property.homeStatus.ToString(),
+                property.homeType.ToString(),
+                 property.square_meters,
+                 UserMapper.ToDto(property.user),
+                 property.bookmark.Any(u => u.UserEntityId == userId),
+                  property.UserEntityId.Equals(userId),
+                PropertyImageMapper.ToDto(property.propertiesImage),
+                property.createdAt
+            );
         }
 
     }

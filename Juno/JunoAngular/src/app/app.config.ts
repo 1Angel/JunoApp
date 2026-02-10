@@ -9,13 +9,13 @@ import { AuthService } from './common/Services/AuthService';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideAppInitializer(()=> {
       const service = inject(AuthService);
       service.CurrentUser().subscribe((res)=>{
         service.setAuthentication(res)
       });
     }),
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideRouter(routes, withInMemoryScrolling({
       anchorScrolling: 'enabled',
       scrollPositionRestoration: "top"
